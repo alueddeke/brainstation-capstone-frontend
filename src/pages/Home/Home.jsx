@@ -1,4 +1,4 @@
-import MainForm from "../../components/Form/MainForm";
+import MainForm from "../../components/MainForm/MainForm";
 import "./Home.scss";
 
 function Home() {

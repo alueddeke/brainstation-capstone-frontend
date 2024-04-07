@@ -1,0 +1,99 @@
+@use "../../styles/partials/variables" as *;
+
+.main-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__container {
+    width: 60%;
+  }
+  &__radio-container {
+    display: flex;
+  }
+
+  &__text-input {
+    margin-top: 32px;
+    width: 50%;
+    border-radius: 4px;
+    border: none;
+    padding: 4px;
+    background-image: url("../../assets/icons/search-24px.svg");
+    background-repeat: no-repeat;
+    background-position: right 5% bottom 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+
+  &__submit {
+    background-color: $gist-accent-2;
+
+    &:hover {
+      background-color: $gist-black;
+      color: $gist-white;
+    }
+    &-container {
+      margin-top: 32px;
+      display: flex;
+      // width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+input[type="text"]:focus {
+  border: 1px solid $gist-black;
+}
+.radio-button-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px;
+}
+
+.response {
+  &__container {
+    background-color: $gist-white;
+    border-radius: 4px;
+    padding: 16px;
+    margin: 8px;
+    box-shadow: 0 2px 400px $gist-white;
+  }
+  &__point {
+    margin-top: 12px;
+  }
+
+  &__bottom {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+  &__buttons-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__save {
+    background-color: #c9ffbf;
+    margin-left: 16px;
+    &:hover {
+      background-color: #8eff77;
+    }
+  }
+
+  &__close {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid $gist-black;
+    }
+  }
+}
+
+.button {
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  cursor: pointer;
+}
