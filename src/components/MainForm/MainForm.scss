@@ -56,6 +56,10 @@ input[type="text"]:focus {
     padding: 16px;
     margin: 8px;
     box-shadow: 0 2px 400px $gist-white;
+
+    &--invisible {
+      display: none;
+    }
   }
   &__point {
     margin-top: 12px;

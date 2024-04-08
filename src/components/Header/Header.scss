@@ -13,8 +13,22 @@
     align-items: flex-end;
   }
 
+  &__title {
+    position: relative;
+    left: -8px;
+  }
   &__links {
     display: flex;
+  }
+
+  &__logo {
+    width: 40px;
+
+    &-container {
+      display: flex;
+      align-items: flex-end;
+      width: auto;
+    }
   }
 
   &__link {
