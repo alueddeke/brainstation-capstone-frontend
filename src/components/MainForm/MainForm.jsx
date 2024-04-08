@@ -12,7 +12,6 @@ function MainForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log("submited");
 
     let prompt = "";
 
@@ -33,7 +32,9 @@ function MainForm() {
         console.log("gemini was used");
         console.log("prompt:", prompt);
       } else if (selectAI === "perplexity") {
-        // perplexity prompt
+        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
+        console.log("perplexity was used");
+        console.log("prompt:", prompt);
       }
 
       try {
