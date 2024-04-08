@@ -23,18 +23,22 @@ function MainForm() {
     }
     if (textInput.trim() !== "") {
       setIsSubmitting(true);
+      console.log(selectAI);
       if (selectAI === "gpt") {
-        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
-        console.log(prompt);
+        return;
+        // prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
+        // console.log(prompt);
       } else if (selectAI === "gemini") {
-        // gemini prompt - maybe make this friendly to highlight "nonharmful"
+        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
+        console.log("gemini was used");
+        console.log("prompt:", prompt);
       } else if (selectAI === "perplexity") {
         // perplexity prompt
       }
 
       try {
         const res = await axios
-          .post("http://localhost:8080/response", { prompt })
+          .post(`http://localhost:8080/response/${selectAI}`, { prompt })
           .then((res) => {
             console.log(res.data);
             setResponse(res.data);
@@ -124,7 +128,7 @@ function MainForm() {
       {/* eventually only display ressonse container if there is response */}
 
       {isResponseVisible && (
-        <div className="response__container">
+        <div className={`response__container response__container--${selectAI}`}>
           {renderPoints()}
           <div className="response__bottom">
             <div className="response__buttons-container">

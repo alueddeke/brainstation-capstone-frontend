@@ -57,6 +57,16 @@ input[type="text"]:focus {
     margin: 8px;
     box-shadow: 0 2px 400px $gist-white;
 
+    &--gpt {
+      background-color: $gpt-green;
+    }
+    &--gemini {
+      background-color: $gemini-purple;
+    }
+    &--perplexity {
+      background-color: $perplexity-blue;
+    }
+
     &--invisible {
       display: none;
     }
@@ -79,6 +89,7 @@ input[type="text"]:focus {
   &__save {
     background-color: #c9ffbf;
     margin-left: 16px;
+    border: 1px solid $gist-black !important;
     &:hover {
       background-color: #8eff77;
     }
