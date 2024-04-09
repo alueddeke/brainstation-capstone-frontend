@@ -2,14 +2,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.scss";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
+import About from "./pages/About/About";
+import { AuthProvider } from "./contexts/authContext";
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-      </Routes>
+      <AuthProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/Login" element={<Login />}></Route>
+          <Route path="/Signup" element={<Signup />}></Route>
+          <Route path="/About" element={<About />}></Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

@@ -106,6 +106,9 @@ input[type="text"]:focus {
   }
 }
 
+input[type="radio"]:hover {
+  cursor: pointer;
+}
 .button {
   border: none;
   border-radius: 4px;

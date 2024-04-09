@@ -5,6 +5,8 @@ $desktop-breakpoint: 1280px;
 //colors
 
 $gist-black: #212529;
+
+$gist-black-lighter: lighten($gist-black, 15%);
 $gist-white: #f8f9fa;
 $gist-accent-1: #ffdee9;
 $gist-accent-2: #e6faff;
@@ -27,3 +29,25 @@ $perplexity-blue: #a8f7f9;
 // #a8f7f9
 // #9aeff2
 // #8cdff0
+
+// Gray
+// GRAY 0
+// #f8f9fa
+// GRAY 1
+// #f1f3f5
+// GRAY 2
+// #e9ecef
+// GRAY 3
+// #dee2e6
+// GRAY 4
+// #ced4da
+// GRAY 5
+// #adb5bd
+// GRAY 6
+// #868e96
+// GRAY 7
+// #495057
+// GRAY 8
+// #343a40
+// GRAY 9
+// #212529
