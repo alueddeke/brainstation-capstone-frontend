@@ -1,17 +1,23 @@
+@use "../../styles/partials/variables" as *;
+
 .main {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  &__container {
+  &__content-container {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    // border: 1px solid blue;
   }
 }
 
 .home {
+  &__header-wrapper {
+    display: flex;
+  }
   &__header-container {
     padding: 16px;
   }
@@ -23,4 +29,37 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  &__logged-out {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__sections {
+    display: flex;
+    flex: 1;
+    border: 1px orange solid;
+  }
+  &__left {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    background-color: $gist-white;
+  }
+  &__right {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+  }
+}
+
+.library {
+  border: black 1px solid;
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: $gist-white;
+  width: 100%;
 }
