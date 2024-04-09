@@ -3,6 +3,7 @@ import "./LoginModal.scss";
 import {
   doSignInWithEmailAndPassword,
   doSignInWithGoogle,
+  doSignInWithFacebook,
 } from "../../firebase/auth";
 import { useAuth } from "../../contexts/authContext";
 import { useNavigate, Navigate } from "react-router-dom";
@@ -63,8 +64,21 @@ const LoginModal = () => {
     setPassword(e.target.value);
   };
 
-  const handleFacebookLogin = () => {
-    // Implement Firebase Facebook authentication here
+  const handleFacebookLogin = async (e) => {
+    e.preventDefault();
+    if (!isSigningIn) {
+      setIsSigningIn(true);
+      try {
+        await doSignInWithFacebook();
+        // alert("sign in successful!");
+        navigate("/");
+      } catch (error) {
+        console.error(error);
+        // setErrorMessage(error.message);
+        setIsSigningIn(false);
+      }
+      setIsLoading(false);
+    }
     console.log("Facebook Login");
   };
 

@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import "./SignupModal.scss";
-import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
+import {
+  doCreateUserWithEmailAndPassword,
+  doSignInWithGoogle,
+  doSignInWithFacebook,
+} from "../../firebase/auth";
 import { useAuth } from "../../contexts/authContext";
-import { Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const SignupModal = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +16,7 @@ const SignupModal = () => {
   const [errorMessage, setErrorMessage] = useState();
   //logged in status
   const { userLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,14 +37,32 @@ const SignupModal = () => {
     setConfirmPassword(e.target.value);
   };
 
-  const handleGoogleSignup = () => {
-    //  Firebase Google Signup
-    console.log("Google Signup");
+  const handleGoogleSignup = async (e) => {
+    if (!isRegistering) {
+      setIsRegistering(true);
+      try {
+        await doSignInWithGoogle();
+        navigate("/");
+      } catch (error) {
+        console.error("Error signing up with Google:", error.message);
+      }
+      setIsRegistering(false);
+    }
   };
-  const handleFacebookSignup = () => {
-    //  Firebase Facebook Signup
-    console.log("Facebook Signup");
+
+  const handleFacebookSignup = async (e) => {
+    if (!isRegistering) {
+      setIsRegistering(true);
+      try {
+        await doSignInWithFacebook();
+        navigate("/");
+      } catch (error) {
+        console.error("Error signing up with Facebook:", error.message);
+      }
+      setIsRegistering(false);
+    }
   };
+
   return (
     <>
       {userLoggedIn && <Navigate to={"/"} replace={true} />}
