@@ -1,8 +1,13 @@
 import "./Header.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import whiteLogo from "../../assets/icons/gist_logo_white.svg";
+import { doSignOut } from "../../firebase/auth";
+import { useAuth } from "../../contexts/authContext";
 
 function Header() {
+  const navigate = useNavigate();
+  const { userLoggedIn } = useAuth();
+  console.log("header", userLoggedIn);
   return (
     <header className="header">
       <div className="header__container">
@@ -19,13 +24,38 @@ function Header() {
         </Link>
         <div className="header__links">
           <div className="header__link-container">
-            <p className="header__link">About</p>
+            <Link to="/About" className="header__link">
+              About
+            </Link>
           </div>
-          <div className="header__link-container">
-            <p className="header__link">Log in</p>
-          </div>
-          <div className="header__link-container">
-            <p className="header__link">Sign up</p>
+
+          <div className="header__logged-in-container">
+            {userLoggedIn ? (
+              <button
+                className="header__link-container logout-button"
+                onClick={() => {
+                  doSignOut().then(() => {
+                    alert("You have successfully logged out!");
+                    navigate("/");
+                  });
+                }}
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <div className="header__link-container">
+                  <Link to="/Login" className="header__link">
+                    Login
+                  </Link>
+                </div>
+                <div className="header__link-container">
+                  <Link to="/Signup" className="header__link">
+                    Sign Up
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
