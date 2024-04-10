@@ -8,7 +8,7 @@ function MainForm({
   handleSaveItem,
   handleCloseResponse,
   selectAI,
-  setSelectAI,
+  handleSelectAIChange,
   textInput,
   setTextInput,
   response,
@@ -16,11 +16,11 @@ function MainForm({
   isSubmitting,
 }) {
   const { userLoggedIn } = useAuth();
-  const { points } = response;
+  const { points, color, selectedAI } = response;
 
   // removing the topic
 
-  console.log("mainForm", response);
+  // console.log("mainForm", response);
 
   const renderedPoints = points
     ? points.map((point, index) => (
@@ -44,7 +44,7 @@ function MainForm({
               name="gpt"
               value="gpt"
               checked={selectAI === "gpt"}
-              onChange={() => setSelectAI("gpt")}
+              onChange={() => handleSelectAIChange("gpt")}
             />
           </div>
           <div className="radio-button-container">
@@ -55,7 +55,7 @@ function MainForm({
               name="gemini"
               value="gemini"
               checked={selectAI === "gemini"}
-              onChange={() => setSelectAI("gemini")}
+              onChange={() => handleSelectAIChange("gemini")}
             />
           </div>
           <div className="radio-button-container">
@@ -66,7 +66,7 @@ function MainForm({
               name="perplexity"
               value="perplexity"
               checked={selectAI === "perplexity"}
-              onChange={() => setSelectAI("perplexity")}
+              onChange={() => handleSelectAIChange("perplexity")}
             />
           </div>
         </div>
@@ -90,7 +90,8 @@ function MainForm({
       {/* eventually only display response container if there is response */}
 
       {points && points.length > 0 && (
-        <div className={`response__container response__container--${selectAI}`}>
+        <div className={`response__container response__container--${color}`}>
+          <h4>This was a {selectedAI} response</h4>
           {renderedPoints}
           <div className="response__bottom">
             <div className="response__buttons-container">
@@ -99,6 +100,12 @@ function MainForm({
                 onClick={handleCloseResponse}
               >
                 close
+              </button>
+              <button
+                className=" response__close"
+                onClick={handleCloseResponse}
+              >
+                edit
               </button>
               <button
                 className="button response__save"

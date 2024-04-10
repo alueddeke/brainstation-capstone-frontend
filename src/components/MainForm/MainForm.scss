@@ -88,7 +88,7 @@ input[type="text"]:focus {
 
   &__save {
     background-color: #c9ffbf;
-    margin-left: 16px;
+
     border: 1px solid $gist-black !important;
     &:hover {
       background-color: #8eff77;
@@ -100,6 +100,7 @@ input[type="text"]:focus {
     border-radius: 4px;
     padding: 8px;
     cursor: pointer;
+    margin-right: 16px;
     &:hover {
       border: 1px solid $gist-black;
     }
