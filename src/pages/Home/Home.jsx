@@ -17,7 +17,7 @@ function Home() {
   const [previousInput, setPreviousInput] = useState("");
   const [previousAI, setPreviousAI] = useState("");
   const [itemCollapsed, setItemCollapsed] = useState(true);
-  const [selectedItemIndex, setSelectedItemIndex] = useState();
+  const [libraryViews, setLibraryViews] = useState([]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -32,15 +32,15 @@ function Home() {
       // console.log(selectAI);
       if (selectAI === "gpt") {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
-        console.log(prompt);
+        // console.log(prompt);
       } else if (selectAI === "gemini") {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
         console.log("gemini was used");
-        console.log("prompt:", prompt);
+        // console.log("prompt:", prompt);
       } else if (selectAI === "perplexity") {
-        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
+        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Only provide the points, no confirmation. Make sure to list each point with a number followed by a period, example: 1. `;
         console.log("perplexity was used");
-        console.log("prompt:", prompt);
+        // console.log("prompt:", prompt);
       }
 
       try {
@@ -50,18 +50,18 @@ function Home() {
             console.log(res.data);
 
             const responseColor = selectAI;
-            // let responseArr = [];
-            // if (selectAI !== "perplexity") {
-            //   responseArr = res.data.choices[0].message.content
-            //     .split(/\d+\./)
-            //     .filter((point) => point.trim() !== "")
-            //     .map((point) => point.trim());
-            // } else {
-            const responseArr = res.data
-              .split(/\d+\./)
-              .filter((point) => point.trim() !== "")
-              .map((point) => point.trim());
-            //}
+            let responseArr = [];
+            if (selectAI === "perplexity") {
+              responseArr = res.data.choices[0].message.content
+                .split(/\d+\./)
+                .filter((point) => point.trim() !== "")
+                .map((point) => point.trim());
+            } else {
+              responseArr = res.data
+                .split(/\d+\./)
+                .filter((point) => point.trim() !== "")
+                .map((point) => point.trim());
+            }
 
             setResponse({
               points: responseArr,
@@ -82,10 +82,17 @@ function Home() {
   }
 
   function handleSaveItem(item) {
-    setLibraryItems((prevLibraryItems) => [...prevLibraryItems, item]);
-    console.log("library items:", libraryItems);
+    const newLibraryItem = {
+      id: Math.random(),
+      ...item,
+      isCollapsed: true,
+    };
+    setLibraryItems((prevLibraryItems) => [
+      ...prevLibraryItems,
+      newLibraryItem,
+    ]);
+    // console.log("library items:", libraryItems);
 
-    alert("Response saved to your personal library!");
     handleCloseResponse();
   }
 
@@ -93,15 +100,28 @@ function Home() {
     setPreviousAI(selectAI);
     setSelectAI(value);
   }
-  function handleItemClick(index) {
-    setSelectedItemIndex(index);
-    setItemCollapsed(false);
+
+  function handleItemClick(id) {
+    const clickedItem = libraryItems.find((item) => item.id === id);
+    console.log(clickedItem);
+    if (clickedItem) {
+      const newLibraryItems = libraryItems.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+          };
+        }
+        return item;
+      });
+
+      setLibraryViews((prevLibraryViews) => [...prevLibraryViews, clickedItem]);
+      setLibraryItems(newLibraryItems);
+    }
   }
 
   function handleCloseResponse() {
     setIsResponseVisible(false);
     setResponse("");
-    console.log("close");
   }
 
   return (
@@ -120,8 +140,6 @@ function Home() {
                 <Library
                   handleItemClick={handleItemClick}
                   libraryItems={libraryItems}
-                  itemCollapsed={itemCollapsed}
-                  setItemCollapsed={setItemCollapsed}
                 />
               </div>
             )}
@@ -134,39 +152,47 @@ function Home() {
               : "content-wrapper__logged-out"
           }
         >
-          <div className="home__header-wrapper">
-            <div className="home__header-container">
-              <h1>
-                {userLoggedIn
-                  ? `Hello ${
-                      currentUser.displayName
-                        ? currentUser.displayName
-                        : currentUser.email
-                    }, welcome back!`
-                  : "Welcome to gist! Login or create an account to save your responses!"}
-              </h1>
-            </div>
-          </div>
-
-          <div className="main__content-container">
-            <main className="main">
-              <LibraryViews libraryItems={libraryItems} />
-              {itemCollapsed && (
-                <MainForm
-                  handleSubmit={handleSubmit}
-                  handleSaveItem={handleSaveItem}
-                  handleCloseResponse={handleCloseResponse}
-                  selectAI={selectAI}
-                  handleSelectAIChange={handleSelectAIChange}
-                  textInput={textInput}
-                  setTextInput={setTextInput}
-                  response={response}
-                  setIsResponseVisible={setIsResponseVisible}
-                  setIsSubmitting={setIsSubmitting}
-                />
-              )}
+          {libraryViews.length > 0 ? (
+            <main className="main__content-container">
+              <LibraryViews
+                libraryViews={libraryViews}
+                setLibraryViews={setLibraryViews}
+              />
             </main>
-          </div>
+          ) : (
+            <>
+              <div className="home__header-wrapper">
+                <div className="home__header-container">
+                  <h1>
+                    {userLoggedIn
+                      ? `Hello ${
+                          currentUser.displayName
+                            ? currentUser.displayName
+                            : currentUser.email
+                        }, welcome back!`
+                      : "Welcome to gist! Login or create an account to save your responses!"}
+                  </h1>
+                </div>
+              </div>
+
+              <div className="main__content-container">
+                <main className="main">
+                  <MainForm
+                    handleSubmit={handleSubmit}
+                    handleSaveItem={handleSaveItem}
+                    handleCloseResponse={handleCloseResponse}
+                    selectAI={selectAI}
+                    handleSelectAIChange={handleSelectAIChange}
+                    textInput={textInput}
+                    setTextInput={setTextInput}
+                    response={response}
+                    setIsResponseVisible={setIsResponseVisible}
+                    setIsSubmitting={setIsSubmitting}
+                  />
+                </main>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -18,10 +18,6 @@ function MainForm({
   const { userLoggedIn } = useAuth();
   const { points, color, selectedAI } = response;
 
-  // removing the topic
-
-  // console.log("mainForm", response);
-
   const renderedPoints = points
     ? points.map((point, index) => (
         <p key={index}>{`${index + 1}. ${point}`}</p>
