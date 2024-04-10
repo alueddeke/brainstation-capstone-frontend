@@ -16,15 +16,14 @@ function MainForm({
   isSubmitting,
 }) {
   const { userLoggedIn } = useAuth();
+  const { points } = response;
 
   // removing the topic
-  const responseCopy = [...response];
-  const topic = responseCopy.pop();
 
-  console.log("Main form topic:", topic);
+  console.log("mainForm", response);
 
-  const renderedPoints = responseCopy
-    ? responseCopy.map((point, index) => (
+  const renderedPoints = points
+    ? points.map((point, index) => (
         <p key={index}>{`${index + 1}. ${point}`}</p>
       ))
     : null;
@@ -90,7 +89,7 @@ function MainForm({
       </form>
       {/* eventually only display response container if there is response */}
 
-      {response.length > 0 && (
+      {points && points.length > 0 && (
         <div className={`response__container response__container--${selectAI}`}>
           {renderedPoints}
           <div className="response__bottom">

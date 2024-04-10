@@ -10,10 +10,12 @@ function Home() {
   const [libraryItems, setLibraryItems] = useState([]);
   const [selectAI, setSelectAI] = useState("gpt");
   const [textInput, setTextInput] = useState("");
-  const [response, setResponse] = useState([]);
+  const [response, setResponse] = useState({});
+
   const [isResponseVisible, setIsResponseVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [previousInput, setPreviousInput] = useState("");
+  const [responseColor, setResponseColor] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -25,7 +27,7 @@ function Home() {
     }
     if (textInput.trim() !== "") {
       setIsSubmitting(true);
-      console.log(selectAI);
+      // console.log(selectAI);
       if (selectAI === "gpt") {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
         console.log(prompt);
@@ -45,6 +47,7 @@ function Home() {
           .then((res) => {
             console.log(res.data);
 
+            const responseColor = selectAI;
             const responseArr = res.data
               .split(/\d+\./)
               .filter((point) => point.trim() !== "")
@@ -53,12 +56,16 @@ function Home() {
             // const topicObject = { topicTitle: textInput };
             // const fullResponseArray = [...responseArr, topicObject];
             // console.log(topicObject);
-            responseArr.push(textInput);
-            console.log("pushed:", responseArr);
-            setResponse(responseArr);
+            // responseArr.push(textInput);
+            // console.log("pushed:", responseArr);
+            setResponse({
+              points: responseArr,
+              color: responseColor,
+              topic: textInput,
+            });
 
             setIsResponseVisible(true);
-            console.log("response array:", responseArr);
+            // console.log("response array:", responseArr);
           });
       } catch (err) {
         console.error(err);
@@ -71,7 +78,8 @@ function Home() {
 
   function handleSaveItem(item) {
     setLibraryItems((prevLibraryItems) => [...prevLibraryItems, item]);
-    console.log(libraryItems);
+    console.log("library items:", libraryItems);
+
     alert("Response saved to your personal library!");
     handleCloseResponse();
   }
