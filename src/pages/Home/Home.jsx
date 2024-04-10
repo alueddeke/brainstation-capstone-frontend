@@ -50,10 +50,15 @@ function Home() {
               .filter((point) => point.trim() !== "")
               .map((point) => point.trim());
 
-            console.log(responseArr);
+            // const topicObject = { topicTitle: textInput };
+            // const fullResponseArray = [...responseArr, topicObject];
+            // console.log(topicObject);
+            responseArr.push(textInput);
+            console.log("pushed:", responseArr);
             setResponse(responseArr);
 
             setIsResponseVisible(true);
+            console.log("response array:", responseArr);
           });
       } catch (err) {
         console.error(err);

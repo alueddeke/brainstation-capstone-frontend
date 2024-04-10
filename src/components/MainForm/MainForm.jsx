@@ -17,8 +17,14 @@ function MainForm({
 }) {
   const { userLoggedIn } = useAuth();
 
-  const renderedPoints = response
-    ? response.map((point, index) => (
+  // removing the topic
+  const responseCopy = [...response];
+  const topic = responseCopy.pop();
+
+  console.log("Main form topic:", topic);
+
+  const renderedPoints = responseCopy
+    ? responseCopy.map((point, index) => (
         <p key={index}>{`${index + 1}. ${point}`}</p>
       ))
     : null;
