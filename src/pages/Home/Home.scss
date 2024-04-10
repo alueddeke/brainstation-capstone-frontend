@@ -1,17 +1,23 @@
+@use "../../styles/partials/variables" as *;
+
 .main {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  &__container {
+  &__content-container {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    // border: 1px solid blue;
   }
 }
 
 .home {
+  &__header-wrapper {
+    display: flex;
+  }
   &__header-container {
     padding: 16px;
   }
@@ -20,7 +26,30 @@
 .content-wrapper {
   background-color: #ffdee9;
   background-image: linear-gradient(0deg, #ffdee9 0%, #e6faff 100%);
+
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  &__logged-out {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__sections {
+    display: flex;
+    flex: 1;
+  }
+  &__left {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    background-color: $gist-white;
+  }
+  &__right {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
 }
