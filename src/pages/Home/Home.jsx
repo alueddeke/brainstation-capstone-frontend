@@ -1,3 +1,5 @@
+import "../../firebase/firebase";
+import { getFirestore, addDoc, collection } from "firebase/firestore";
 import MainForm from "../../components/MainForm/MainForm";
 import Library from "../../components/Library/Library";
 import "./Home.scss";
@@ -18,6 +20,8 @@ function Home() {
   const [previousAI, setPreviousAI] = useState("");
   const [itemCollapsed, setItemCollapsed] = useState(true);
   const [libraryViews, setLibraryViews] = useState([]);
+
+  const db = getFirestore();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -81,20 +85,56 @@ function Home() {
     }
   }
 
+  //not working
   function handleSaveItem(item) {
     const newLibraryItem = {
       id: Math.random(),
       ...item,
       isCollapsed: true,
     };
+    console.log({ newLibraryItem });
     setLibraryItems((prevLibraryItems) => [
       ...prevLibraryItems,
       newLibraryItem,
     ]);
-    // console.log("library items:", libraryItems);
+    const collectionRef = db.collection("LibraryItems");
+    const firebaseData = newLibraryItem;
+    const name = newLibraryItem.topic;
 
+    const saveDataToFirestore = async () => {
+      await collectionRef.add(firebaseData).then((docRef) => {
+        console.log("document added with ID: ", docRef);
+      });
+    };
+    saveDataToFirestore();
+    console.log("submission attempt");
     handleCloseResponse();
   }
+
+  //working?
+  // function handleSaveItem(item) {
+  //   const newLibraryItem = {
+  //     id: Math.random(),
+  //     ...item,
+  //     isCollapsed: true,
+  //   };
+  //   console.log({ newLibraryItem });
+  //   setLibraryItems((prevLibraryItems) => [
+  //     ...prevLibraryItems,
+  //     newLibraryItem,
+  //   ]);
+  //   const firebaseData = newLibraryItem;
+
+  //   console.log(firebaseData);
+
+  //   const saveDataToFirestore = async () => {
+  //     const docRef = await addDoc(collection(db, "myCollection"), {
+  //       libraryItem: firebaseData,
+  //     });
+  //   };
+  //   saveDataToFirestore();
+  //   handleCloseResponse();
+  // }
 
   function handleSelectAIChange(value) {
     setPreviousAI(selectAI);
@@ -140,6 +180,7 @@ function Home() {
                 <Library
                   handleItemClick={handleItemClick}
                   libraryItems={libraryItems}
+                  setLibraryItems={setLibraryItems}
                 />
               </div>
             )}
