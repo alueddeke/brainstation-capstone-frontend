@@ -25,6 +25,7 @@ export function AuthProvider({ children }) {
 
   //when users have successful login, info will be user
   async function initializeUser(user) {
+    console.log({ user });
     if (user) {
       setCurrentUser({ ...user });
       setUserLoggedIn(true);

@@ -1,8 +1,17 @@
+import "../../firebase/firebase";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import MainForm from "../../components/MainForm/MainForm";
 import Library from "../../components/Library/Library";
 import "./Home.scss";
 import { useAuth } from "../../contexts/authContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import LibraryViews from "../../components/LibraryViews/LibraryViews";
 
@@ -18,6 +27,24 @@ function Home() {
   const [previousAI, setPreviousAI] = useState("");
   const [itemCollapsed, setItemCollapsed] = useState(true);
   const [libraryViews, setLibraryViews] = useState([]);
+
+  const db = getFirestore();
+
+  async function qLibItems() {
+    const items = [];
+    const q = query(
+      collection(db, "libraryItems"),
+      where("uid", "==", currentUser.uid)
+    );
+    const snapshot = await getDocs(q);
+    snapshot.forEach((doc) => {
+      items.push({ ...doc.data(), isCollapsed: true, id: doc.id });
+    });
+    setLibraryItems(items);
+  }
+  useEffect(() => {
+    qLibItems();
+  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -81,18 +108,15 @@ function Home() {
     }
   }
 
-  function handleSaveItem(item) {
-    const newLibraryItem = {
-      id: Math.random(),
+  //not working
+  async function handleSaveItem(item) {
+    await addDoc(collection(db, "libraryItems"), {
+      uid: currentUser.uid,
       ...item,
-      isCollapsed: true,
-    };
-    setLibraryItems((prevLibraryItems) => [
-      ...prevLibraryItems,
-      newLibraryItem,
-    ]);
-    // console.log("library items:", libraryItems);
+    });
+    qLibItems();
 
+    console.log("submission attempt");
     handleCloseResponse();
   }
 
@@ -138,6 +162,7 @@ function Home() {
             {userLoggedIn && (
               <div className="main__content-container">
                 <Library
+                  qLibItems={qLibItems}
                   handleItemClick={handleItemClick}
                   libraryItems={libraryItems}
                 />

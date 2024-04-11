@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
 import "./LoginModal.scss";
+
 import {
   doSignInWithEmailAndPassword,
   doSignInWithGoogle,
@@ -14,7 +16,7 @@ const LoginModal = () => {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  //logged in status
+
   const { userLoggedIn } = useAuth();
   const navigate = useNavigate();
 
