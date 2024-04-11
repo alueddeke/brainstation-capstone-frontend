@@ -1,10 +1,8 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import React, { useContext, useEffect, useState } from "react";
-import { setDoc, doc, getFirestore } from "firebase/firestore";
 
 const AuthContext = React.createContext();
-const db = getFirestore();
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -30,10 +28,6 @@ export function AuthProvider({ children }) {
     console.log({ user });
     if (user) {
       setCurrentUser({ ...user });
-      await setDoc(doc(db, "users", user.uid), {
-        email: user.email,
-      });
-
       setUserLoggedIn(true);
     } else {
       setCurrentUser(null);

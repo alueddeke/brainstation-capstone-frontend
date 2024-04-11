@@ -1,8 +1,6 @@
 import "../../firebase/firebase";
 import {
   getFirestore,
-  setDoc,
-  doc,
   addDoc,
   collection,
   query,
@@ -16,8 +14,6 @@ import { useAuth } from "../../contexts/authContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LibraryViews from "../../components/LibraryViews/LibraryViews";
-
-const db = getFirestore();
 
 function Home() {
   const { currentUser, userLoggedIn } = useAuth();
@@ -42,7 +38,7 @@ function Home() {
     );
     const snapshot = await getDocs(q);
     snapshot.forEach((doc) => {
-      items.push({ ...doc.data(), isCollapsed: true });
+      items.push({ ...doc.data(), isCollapsed: true, id: doc.id });
     });
     setLibraryItems(items);
   }
@@ -120,54 +116,9 @@ function Home() {
     });
     qLibItems();
 
-    // const newLibraryItem = {
-    //   id: Math.random(),
-    //   ...item,
-    //   isCollapsed: true,
-    // };
-    // console.log({ newLibraryItem });
-    // setLibraryItems((prevLibraryItems) => [
-    //   ...prevLibraryItems,
-    //   newLibraryItem,
-    // ]);
-    // const collectionRef = db.collection("LibraryItems");
-    // const firebaseData = newLibraryItem;
-    // const name = newLibraryItem.topic;
-
-    // const saveDataToFirestore = async () => {
-    //   await collectionRef.add(firebaseData).then((docRef) => {
-    //     console.log("document added with ID: ", docRef);
-    //   });
-    // };
-    // saveDataToFirestore();
     console.log("submission attempt");
     handleCloseResponse();
   }
-
-  //working?
-  // function handleSaveItem(item) {
-  //   const newLibraryItem = {
-  //     id: Math.random(),
-  //     ...item,
-  //     isCollapsed: true,
-  //   };
-  //   console.log({ newLibraryItem });
-  //   setLibraryItems((prevLibraryItems) => [
-  //     ...prevLibraryItems,
-  //     newLibraryItem,
-  //   ]);
-  //   const firebaseData = newLibraryItem;
-
-  //   console.log(firebaseData);
-
-  //   const saveDataToFirestore = async () => {
-  //     const docRef = await addDoc(collection(db, "myCollection"), {
-  //       libraryItem: firebaseData,
-  //     });
-  //   };
-  //   saveDataToFirestore();
-  //   handleCloseResponse();
-  // }
 
   function handleSelectAIChange(value) {
     setPreviousAI(selectAI);
@@ -211,9 +162,9 @@ function Home() {
             {userLoggedIn && (
               <div className="main__content-container">
                 <Library
+                  qLibItems={qLibItems}
                   handleItemClick={handleItemClick}
                   libraryItems={libraryItems}
-                  setLibraryItems={setLibraryItems}
                 />
               </div>
             )}
