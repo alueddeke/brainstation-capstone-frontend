@@ -1,12 +1,23 @@
 import "../../firebase/firebase";
-import { getFirestore, addDoc, collection } from "firebase/firestore";
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  addDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import MainForm from "../../components/MainForm/MainForm";
 import Library from "../../components/Library/Library";
 import "./Home.scss";
 import { useAuth } from "../../contexts/authContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import LibraryViews from "../../components/LibraryViews/LibraryViews";
+
+const db = getFirestore();
 
 function Home() {
   const { currentUser, userLoggedIn } = useAuth();
@@ -22,6 +33,22 @@ function Home() {
   const [libraryViews, setLibraryViews] = useState([]);
 
   const db = getFirestore();
+
+  async function qLibItems() {
+    const items = [];
+    const q = query(
+      collection(db, "libraryItems"),
+      where("uid", "==", currentUser.uid)
+    );
+    const snapshot = await getDocs(q);
+    snapshot.forEach((doc) => {
+      items.push({ ...doc.data(), isCollapsed: true });
+    });
+    setLibraryItems(items);
+  }
+  useEffect(() => {
+    qLibItems();
+  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -86,27 +113,33 @@ function Home() {
   }
 
   //not working
-  function handleSaveItem(item) {
-    const newLibraryItem = {
-      id: Math.random(),
+  async function handleSaveItem(item) {
+    await addDoc(collection(db, "libraryItems"), {
+      uid: currentUser.uid,
       ...item,
-      isCollapsed: true,
-    };
-    console.log({ newLibraryItem });
-    setLibraryItems((prevLibraryItems) => [
-      ...prevLibraryItems,
-      newLibraryItem,
-    ]);
-    const collectionRef = db.collection("LibraryItems");
-    const firebaseData = newLibraryItem;
-    const name = newLibraryItem.topic;
+    });
+    qLibItems();
 
-    const saveDataToFirestore = async () => {
-      await collectionRef.add(firebaseData).then((docRef) => {
-        console.log("document added with ID: ", docRef);
-      });
-    };
-    saveDataToFirestore();
+    // const newLibraryItem = {
+    //   id: Math.random(),
+    //   ...item,
+    //   isCollapsed: true,
+    // };
+    // console.log({ newLibraryItem });
+    // setLibraryItems((prevLibraryItems) => [
+    //   ...prevLibraryItems,
+    //   newLibraryItem,
+    // ]);
+    // const collectionRef = db.collection("LibraryItems");
+    // const firebaseData = newLibraryItem;
+    // const name = newLibraryItem.topic;
+
+    // const saveDataToFirestore = async () => {
+    //   await collectionRef.add(firebaseData).then((docRef) => {
+    //     console.log("document added with ID: ", docRef);
+    //   });
+    // };
+    // saveDataToFirestore();
     console.log("submission attempt");
     handleCloseResponse();
   }
