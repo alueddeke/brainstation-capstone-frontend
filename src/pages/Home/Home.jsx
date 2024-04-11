@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import LibraryViews from "../../components/LibraryViews/LibraryViews";
 
-function Home() {
+function Home({ libraryViews, setLibraryViews }) {
   const { currentUser, userLoggedIn } = useAuth();
   const [libraryItems, setLibraryItems] = useState([]);
   const [selectAI, setSelectAI] = useState("gpt");
@@ -26,7 +26,7 @@ function Home() {
   const [previousInput, setPreviousInput] = useState("");
   const [previousAI, setPreviousAI] = useState("");
   const [itemCollapsed, setItemCollapsed] = useState(true);
-  const [libraryViews, setLibraryViews] = useState([]);
+  const [loading, setIsLoading] = useState(false);
 
   const db = getFirestore();
 
@@ -48,7 +48,8 @@ function Home() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
+    setIsLoading(true);
+    console.log("loading", loading);
     let prompt = "";
 
     if (textInput.trim() === previousInput.trim() && selectAI === previousAI) {
@@ -61,7 +62,7 @@ function Home() {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
         // console.log(prompt);
       } else if (selectAI === "gemini") {
-        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
+        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand, each point should be a max of 2 sentences. Make sure to list each point with a number followed by a period, example: 1. `;
         console.log("gemini was used");
         // console.log("prompt:", prompt);
       } else if (selectAI === "perplexity") {
@@ -97,7 +98,9 @@ function Home() {
               selectedAI: selectAI,
             });
 
+            console.log("loading", loading);
             setIsResponseVisible(true);
+            setIsLoading(false);
           });
       } catch (err) {
         console.error(err);
@@ -108,7 +111,6 @@ function Home() {
     }
   }
 
-  //not working
   async function handleSaveItem(item) {
     await addDoc(collection(db, "libraryItems"), {
       uid: currentUser.uid,
@@ -211,6 +213,7 @@ function Home() {
                     textInput={textInput}
                     setTextInput={setTextInput}
                     response={response}
+                    loading={loading}
                     setIsResponseVisible={setIsResponseVisible}
                     setIsSubmitting={setIsSubmitting}
                   />

@@ -88,10 +88,17 @@ input[type="text"]:focus {
 
   &__save {
     background-color: #c9ffbf;
-
     border: 1px solid $gist-black !important;
-    &:hover {
-      background-color: #8eff77;
+
+    &--logout {
+      &:hover {
+        background-color: #c9ffbf;
+      }
+    }
+    &--login {
+      &:hover {
+        background-color: #8eff77;
+      }
     }
   }
 
@@ -107,6 +114,32 @@ input[type="text"]:focus {
   }
 }
 
+.loading {
+  &__container {
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    &--invisible {
+      display: none;
+    }
+  }
+  &__text {
+    margin-left: 6px;
+    display: inline-block;
+    font-family: monospace;
+    font-size: 20px;
+    clip-path: inset(0 3ch 0 0);
+    animation: l 1s steps(4) infinite;
+  }
+}
+@keyframes l {
+  to {
+    clip-path: inset(0 -1ch 0 0);
+  }
+}
+
 input[type="radio"]:hover {
   cursor: pointer;
 }
@@ -115,4 +148,10 @@ input[type="radio"]:hover {
   border-radius: 4px;
   padding: 8px;
   cursor: pointer;
+}
+
+.logo-black {
+  width: 30px;
+  position: relative;
+  top: 4px;
 }
