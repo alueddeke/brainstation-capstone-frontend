@@ -1,11 +1,9 @@
 import { useAuth } from "../../contexts/authContext";
 import logoBlack from "../../assets/icons/gist_logo_blk.svg";
 import Tooltip from "@mui/material/Tooltip";
-// import EditForm from "../EditForm/EditForm";
 import UpdateResponse from "../UpdateResponse/UpdateResponse";
 
 import "./MainForm.scss";
-import { useState } from "react";
 
 function MainForm({
   loading,
@@ -23,7 +21,7 @@ function MainForm({
   setResponse,
 }) {
   const { userLoggedIn } = useAuth();
-  const { points, color, selectedAI } = response;
+  const { points, color, selectedAI, topic } = response;
   // const [isEditing, setIsEditing] = useState(false);
 
   console.log(loading);
@@ -182,7 +180,9 @@ function MainForm({
       {points && points.length > 0 && (
         <div className={`response__container response__container--${color}`}>
           <div className="response-data">
-            <h4>This was a {selectedAI} response</h4>
+            <h4>
+              <i>{topic} </i> by {selectedAI}{" "}
+            </h4>
 
             {renderedPoints}
             <div className="response__bottom">
@@ -193,9 +193,7 @@ function MainForm({
                 >
                   close
                 </button>
-                <button className="response__close" onClick={handleEdit}>
-                  edit
-                </button>
+
                 {userLoggedIn ? (
                   <button
                     className="button response__save response__save--login"
@@ -234,8 +232,6 @@ function MainForm({
               </div>
             </div>
           </div>
-
-          {/* bracket closure should be here? */}
         </div>
       )}
     </div>

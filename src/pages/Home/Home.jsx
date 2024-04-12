@@ -28,6 +28,7 @@ function Home({ libraryViews, setLibraryViews }) {
   const [itemCollapsed, setItemCollapsed] = useState(true);
   const [loading, setIsLoading] = useState(false);
   const [textInputError, setTextInputError] = useState("");
+  const [viewsError, setViewsError] = useState("");
 
   const db = getFirestore();
 
@@ -140,7 +141,10 @@ function Home({ libraryViews, setLibraryViews }) {
     const clickedItem = libraryItems.find((item) => item.id === id);
     if (clickedItem) {
       const itemExists = libraryViews.some((item) => item.id === id);
-      if (!itemExists) {
+      if (libraryViews.length === 3) {
+        setViewsError("You are already viewing max amount of items");
+      }
+      if (!itemExists && libraryViews.length < 3) {
         setLibraryViews((prevLibraryViews) => [
           ...prevLibraryViews,
           clickedItem,
@@ -171,6 +175,7 @@ function Home({ libraryViews, setLibraryViews }) {
                   qLibItems={qLibItems}
                   handleItemClick={handleItemClick}
                   libraryItems={libraryItems}
+                  viewsError={viewsError}
                 />
               </div>
             )}
@@ -188,6 +193,7 @@ function Home({ libraryViews, setLibraryViews }) {
               <LibraryViews
                 libraryViews={libraryViews}
                 setLibraryViews={setLibraryViews}
+                viewsError={viewsError}
               />
             </main>
           ) : (
