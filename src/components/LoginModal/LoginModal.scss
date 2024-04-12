@@ -74,3 +74,22 @@
     }
   }
 }
+
+.login__error {
+  color: red;
+  font-size: 11px;
+  animation: wiggle 0.1s ease-in-out 3 alternate;
+
+  &--animate {
+    animation: wiggle 0.1s ease-in-out 3 alternate;
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(3px);
+  }
+}

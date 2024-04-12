@@ -27,6 +27,7 @@ function Home({ libraryViews, setLibraryViews }) {
   const [previousAI, setPreviousAI] = useState("");
   const [itemCollapsed, setItemCollapsed] = useState(true);
   const [loading, setIsLoading] = useState(false);
+  const [textInputError, setTextInputError] = useState("");
 
   const db = getFirestore();
 
@@ -52,23 +53,31 @@ function Home({ libraryViews, setLibraryViews }) {
     console.log("loading", loading);
     let prompt = "";
 
+    setTextInputError("");
+    if (textInput.length < 2) {
+      setTextInputError("Your topic needs to be longer to get the gist");
+      setIsLoading(false);
+      return false;
+    } else if (textInput.length > 50) {
+      setTextInputError("Your topic is too long to get the gist");
+      setIsLoading(false);
+      return false;
+    }
+
     if (textInput.trim() === previousInput.trim() && selectAI === previousAI) {
       return;
     }
     if (textInput.trim() !== "") {
       setIsSubmitting(true);
-      // console.log(selectAI);
+
       if (selectAI === "gpt") {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
-        // console.log(prompt);
       } else if (selectAI === "gemini") {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand, each point should be a max of 2 sentences. Make sure to list each point with a number followed by a period, example: 1. `;
         console.log("gemini was used");
-        // console.log("prompt:", prompt);
       } else if (selectAI === "perplexity") {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Only provide the points, no confirmation. Make sure to list each point with a number followed by a period, example: 1. `;
         console.log("perplexity was used");
-        // console.log("prompt:", prompt);
       }
 
       try {
@@ -129,16 +138,19 @@ function Home({ libraryViews, setLibraryViews }) {
 
   function handleItemClick(id) {
     const clickedItem = libraryItems.find((item) => item.id === id);
-    console.log(clickedItem);
+    // console.log(clickedItem);
     if (clickedItem) {
-      const newLibraryItems = libraryItems.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-          };
-        }
-        return item;
-      });
+      const itemExists = libraryViews.some((item) => item.id === id);
+      if (!itemExists) {
+        const newLibraryItems = libraryItems.map((item) => {
+          if (item.id === id) {
+            return {
+              ...item,
+            };
+          }
+          return item;
+        });
+      }
 
       setLibraryViews((prevLibraryViews) => [...prevLibraryViews, clickedItem]);
       setLibraryItems(newLibraryItems);
@@ -216,6 +228,7 @@ function Home({ libraryViews, setLibraryViews }) {
                     loading={loading}
                     setIsResponseVisible={setIsResponseVisible}
                     setIsSubmitting={setIsSubmitting}
+                    textInputError={textInputError}
                   />
                 </main>
               </div>

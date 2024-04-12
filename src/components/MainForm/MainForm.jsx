@@ -16,6 +16,7 @@ function MainForm({
   response,
   setIsResponseVisible,
   isSubmitting,
+  textInputError,
 }) {
   const { userLoggedIn } = useAuth();
   const { points, color, selectedAI } = response;
@@ -127,6 +128,9 @@ function MainForm({
             </div>
           </Tooltip>
         </div>
+        {textInputError && (
+          <span className="main-form__error">{textInputError}</span>
+        )}
         <input
           type="text"
           className="main-form__text-input"
@@ -144,7 +148,6 @@ function MainForm({
           </button>
         </div>
       </form>
-      {/* eventually only display response container if there is response */}
 
       <div
         className={

@@ -14,18 +14,57 @@ const SignupModal = () => {
   const [confirmPassword, setConfirmPassword] = useState();
   const [isRegistering, setIsRegistering] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
-  //logged in status
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const { userLoggedIn } = useAuth();
+  const [errorAnimation, setErrorAnimation] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isRegistering) {
-      setIsRegistering(true);
-      //do i need to add auth to this?
-      await doCreateUserWithEmailAndPassword(email, password);
+
+    setEmailError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+
+    if (!email) {
+      setEmailError("Email is required");
+      setErrorAnimation(true);
+      return;
     }
+
+    if (!password) {
+      setPasswordError("Password is required");
+      setErrorAnimation(true);
+      return;
+    }
+
+    if (!confirmPassword) {
+      setConfirmPasswordError("Please confirm your password");
+      setErrorAnimation(true);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Your passwords must match");
+      setErrorAnimation(true);
+      return;
+    }
+
+    setIsRegistering(true);
+    try {
+      await doCreateUserWithEmailAndPassword(email, password);
+      alert("Sign up successful!");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      setErrorAnimation(true);
+      setErrorMessage(error.message);
+    }
+    setIsRegistering(false);
   };
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -49,7 +88,7 @@ const SignupModal = () => {
       setIsRegistering(false);
     }
   };
-
+  //replace with github
   const handleFacebookSignup = async (e) => {
     if (!isRegistering) {
       setIsRegistering(true);
@@ -70,13 +109,31 @@ const SignupModal = () => {
         <div className="modal__upper-half">
           <h2 className="modal__title">Sign up to Create an Account</h2>
           <form className="modal__form" onSubmit={handleSubmit}>
+            {emailError && (
+              <span
+                className={`login__error ${
+                  errorAnimation ? "login__error--animate" : ""
+                }`}
+              >
+                {emailError}
+              </span>
+            )}
             <input
               type="email"
               placeholder="Email"
               value={email}
               onChange={handleEmailChange}
               className="modal__form-input modal__form-email"
-            />
+            />{" "}
+            {passwordError && (
+              <span
+                className={`login__error ${
+                  errorAnimation ? "login__error--animate" : ""
+                }`}
+              >
+                {passwordError}
+              </span>
+            )}
             <input
               type="password"
               placeholder="Password"
@@ -84,6 +141,15 @@ const SignupModal = () => {
               onChange={handlePasswordChange}
               className="modal__form-input modal__form-password"
             />
+            {confirmPasswordError && (
+              <span
+                className={`login__error ${
+                  errorAnimation ? "login__error--animate" : ""
+                }`}
+              >
+                {confirmPasswordError}
+              </span>
+            )}
             <input
               type="password"
               placeholder="Confirm Password"
@@ -91,11 +157,12 @@ const SignupModal = () => {
               onChange={handleConfirmPasswordChange}
               className="modal__form-input modal__form-password"
             />
-            {/* display appropriate error, is about password show above password */}
-            {/* {errorMessage && <span className="error">{errorMessage}</span>} */}
             <button type="submit" className="modal__form-submit-button">
               Sign Up
             </button>
+            {errorMessage && (
+              <span className="login__error">{errorMessage}</span>
+            )}
           </form>
         </div>
         <div className="modal__lower-half">

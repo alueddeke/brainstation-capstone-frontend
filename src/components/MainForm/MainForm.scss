@@ -1,9 +1,13 @@
 @use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
 
 .main-form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: slide-top 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  position: relative;
+  top: 150px;
   &__container {
     width: 60%;
   }
@@ -38,6 +42,25 @@
       justify-content: center;
     }
   }
+
+  &__error {
+    position: relative;
+    top: 22px;
+    color: red;
+    font-size: 12px;
+    animation: wiggle 0.1s ease-in-out 3 alternate;
+  }
+}
+
+@include slide-top-animation(-150px);
+
+@keyframes wiggle {
+  0% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(3px);
+  }
 }
 
 input[type="text"]:focus {
@@ -51,6 +74,9 @@ input[type="text"]:focus {
 
 .response {
   &__container {
+    position: relative;
+    top: 150px;
+    animation: slide-top 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     background-color: $gist-white;
     border-radius: 4px;
     padding: 16px;
