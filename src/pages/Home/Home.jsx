@@ -73,7 +73,7 @@ function Home({ libraryViews, setLibraryViews }) {
       if (selectAI === "gpt") {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
       } else if (selectAI === "gemini") {
-        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand, each point should be a max of 2 sentences. Make sure to list each point with a number followed by a period, example: 1. `;
+        prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Each point should not be longer than 120 characters, excluding a heading for the point if appropriate. Make sure to list each point with a number followed by a period, example: 1. `;
         console.log("gemini was used");
       } else if (selectAI === "perplexity") {
         prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Only provide the points, no confirmation. Make sure to list each point with a number followed by a period, example: 1. `;
@@ -138,22 +138,14 @@ function Home({ libraryViews, setLibraryViews }) {
 
   function handleItemClick(id) {
     const clickedItem = libraryItems.find((item) => item.id === id);
-    // console.log(clickedItem);
     if (clickedItem) {
       const itemExists = libraryViews.some((item) => item.id === id);
       if (!itemExists) {
-        const newLibraryItems = libraryItems.map((item) => {
-          if (item.id === id) {
-            return {
-              ...item,
-            };
-          }
-          return item;
-        });
+        setLibraryViews((prevLibraryViews) => [
+          ...prevLibraryViews,
+          clickedItem,
+        ]);
       }
-
-      setLibraryViews((prevLibraryViews) => [...prevLibraryViews, clickedItem]);
-      setLibraryItems(newLibraryItems);
     }
   }
 
