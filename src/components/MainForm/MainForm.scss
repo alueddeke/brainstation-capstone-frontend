@@ -81,7 +81,7 @@ input[type="text"]:focus {
     border-radius: 4px;
     padding: 16px;
     margin: 8px;
-    box-shadow: 0 2px 400px $gist-white;
+    // box-shadow: 0 2px 400px $gist-white;
 
     &--gpt {
       background-color: $gpt-green;
