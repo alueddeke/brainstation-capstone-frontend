@@ -1,7 +1,8 @@
 import { useAuth } from "../../contexts/authContext";
 import logoBlack from "../../assets/icons/gist_logo_blk.svg";
 import Tooltip from "@mui/material/Tooltip";
-import EditForm from "../EditForm/EditForm";
+// import EditForm from "../EditForm/EditForm";
+import UpdateResponse from "../UpdateResponse/UpdateResponse";
 
 import "./MainForm.scss";
 import { useState } from "react";
@@ -23,7 +24,7 @@ function MainForm({
 }) {
   const { userLoggedIn } = useAuth();
   const { points, color, selectedAI } = response;
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
 
   console.log(loading);
 
@@ -31,9 +32,21 @@ function MainForm({
     setIsEditing(true);
   };
 
+  // const renderedPoints = points
+  //   ? points.map((point, index) => (
+  //       <p key={index}>{`${index + 1}. ${point}`}</p>
+  //     ))
+  //   : null;
+
   const renderedPoints = points
     ? points.map((point, index) => (
-        <p key={index}>{`${index + 1}. ${point}`}</p>
+        <UpdateResponse
+          key={index}
+          index={index}
+          point={point}
+          response={response}
+          setResponse={setResponse}
+        />
       ))
     : null;
 
@@ -168,67 +181,60 @@ function MainForm({
 
       {points && points.length > 0 && (
         <div className={`response__container response__container--${color}`}>
-          {isEditing ? (
-            <EditForm
-              response={response}
-              setResponse={setResponse}
-              setIsEditing={setIsEditing}
-              handleSaveItem={handleSaveItem}
-            />
-          ) : (
-            <div className="response-data">
-              <h4>This was a {selectedAI} response</h4>
-              {renderedPoints}
-              <div className="response__bottom">
-                <div className="response__buttons-container">
+          <div className="response-data">
+            <h4>This was a {selectedAI} response</h4>
+
+            {renderedPoints}
+            <div className="response__bottom">
+              <div className="response__buttons-container">
+                <button
+                  className="response__close"
+                  onClick={handleCloseResponse}
+                >
+                  close
+                </button>
+                <button className="response__close" onClick={handleEdit}>
+                  edit
+                </button>
+                {userLoggedIn ? (
                   <button
-                    className="response__close"
-                    onClick={handleCloseResponse}
+                    className="button response__save response__save--login"
+                    onClick={() => handleSaveItem(response)}
+                    disabled={!userLoggedIn}
                   >
-                    close
+                    save
                   </button>
-                  <button className="response__close" onClick={handleEdit}>
-                    edit
-                  </button>
-                  {userLoggedIn ? (
+                ) : (
+                  <Tooltip
+                    title="Sign up or login to save responses!"
+                    placement="top-start"
+                    arrow
+                    slotProps={{
+                      popper: {
+                        modifiers: [
+                          {
+                            name: "offset",
+                            options: {
+                              offset: [0, -3],
+                            },
+                          },
+                        ],
+                      },
+                    }}
+                  >
                     <button
-                      className="button response__save response__save--login"
+                      className="button response__save response__save--logout"
                       onClick={() => handleSaveItem(response)}
                       disabled={!userLoggedIn}
                     >
                       save
                     </button>
-                  ) : (
-                    <Tooltip
-                      title="Sign up or login to save responses!"
-                      placement="top-start"
-                      arrow
-                      slotProps={{
-                        popper: {
-                          modifiers: [
-                            {
-                              name: "offset",
-                              options: {
-                                offset: [0, -3],
-                              },
-                            },
-                          ],
-                        },
-                      }}
-                    >
-                      <button
-                        className="button response__save response__save--logout"
-                        onClick={() => handleSaveItem(response)}
-                        disabled={!userLoggedIn}
-                      >
-                        save
-                      </button>
-                    </Tooltip>
-                  )}
-                </div>
+                  </Tooltip>
+                )}
               </div>
             </div>
-          )}
+          </div>
+
           {/* bracket closure should be here? */}
         </div>
       )}
