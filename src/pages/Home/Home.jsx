@@ -221,6 +221,7 @@ function Home({ libraryViews, setLibraryViews }) {
                     setIsResponseVisible={setIsResponseVisible}
                     setIsSubmitting={setIsSubmitting}
                     textInputError={textInputError}
+                    setResponse={setResponse}
                   />
                 </main>
               </div>
