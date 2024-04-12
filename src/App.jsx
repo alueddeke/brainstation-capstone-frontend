@@ -6,14 +6,24 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import About from "./pages/About/About";
 import { AuthProvider } from "./contexts/authContext";
+import { useState } from "react";
 
 function App() {
+  const [libraryViews, setLibraryViews] = useState([]);
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Header />
+        <Header setLibraryViews={setLibraryViews} />
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route
+            path="/"
+            element={
+              <Home
+                libraryViews={libraryViews}
+                setLibraryViews={setLibraryViews}
+              />
+            }
+          ></Route>
           <Route path="/Login" element={<Login />}></Route>
           <Route path="/Signup" element={<Signup />}></Route>
           <Route path="/About" element={<About />}></Route>

@@ -4,10 +4,11 @@ import whiteLogo from "../../assets/icons/gist_logo_white.svg";
 import { doSignOut } from "../../firebase/auth";
 import { useAuth } from "../../contexts/authContext";
 
-function Header() {
+function Header({ setLibraryViews }) {
   const navigate = useNavigate();
   const { userLoggedIn } = useAuth();
   console.log("header", userLoggedIn);
+
   return (
     <header className="header">
       <div className="header__container">
@@ -35,6 +36,7 @@ function Header() {
                 className="header__link-container logout-button"
                 onClick={() => {
                   doSignOut().then(() => {
+                    setLibraryViews([]);
                     alert("You have successfully logged out!");
                     navigate("/");
                   });

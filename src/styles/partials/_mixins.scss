@@ -11,3 +11,14 @@
     @content;
   }
 }
+
+@mixin slide-top-animation($bottomPosition) {
+  @keyframes slide-top {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY($bottomPosition);
+    }
+  }
+}
