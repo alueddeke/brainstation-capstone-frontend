@@ -1,0 +1,80 @@
+@use "../../styles/partials/variables" as *;
+
+li {
+  list-style: none;
+}
+
+.library-list-item {
+  display: flex;
+  border-radius: 4px;
+
+  &:hover {
+    filter: brightness(95%);
+    animation: scale 0.2s ease-in-out forwards;
+  }
+
+  &--gpt {
+    background-color: $gpt-green;
+  }
+  &--gemini {
+    background-color: $gemini-purple;
+  }
+  &--perplexity {
+    background-color: $perplexity-blue;
+  }
+
+  &__collapsed {
+    display: flex;
+    justify-content: center;
+
+    padding: 4px;
+
+    &--gpt {
+      background-color: $gpt-green;
+    }
+    &--gemini {
+      background-color: $gemini-purple;
+    }
+    &--perplexity {
+      background-color: $perplexity-blue;
+    }
+  }
+
+  &__border-selected {
+    border: 3px solid green;
+  }
+
+  &__buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  &__left {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  &__right {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.delete-icon {
+  width: 15px;
+  cursor: pointer;
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}

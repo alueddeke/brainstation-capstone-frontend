@@ -32,6 +32,8 @@ function Home({ libraryViews, setLibraryViews }) {
 
   const db = getFirestore();
 
+  console.log(currentUser);
+
   async function qLibItems() {
     const items = [];
     const q = query(
@@ -44,6 +46,7 @@ function Home({ libraryViews, setLibraryViews }) {
     });
     setLibraryItems(items);
   }
+
   useEffect(() => {
     qLibItems();
   }, []);
@@ -194,6 +197,8 @@ function Home({ libraryViews, setLibraryViews }) {
                 libraryViews={libraryViews}
                 setLibraryViews={setLibraryViews}
                 viewsError={viewsError}
+                qLibItems={qLibItems}
+                currentUser={currentUser}
               />
             </main>
           ) : (

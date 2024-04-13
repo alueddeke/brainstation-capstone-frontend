@@ -1,0 +1,41 @@
+@use "../../styles/partials/variables" as *;
+
+.library {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  // background-image: linear-gradient(0deg, #a8c7b8 0%, #fff 100%);
+  background-image: linear-gradient(
+    0deg,
+    hsl(145, 25%, 88%) 0%,
+    /* 20% lighter */ hsl(0, 0%, 100%) 100% /* 10% lighter */
+  );
+  // background-image: linear-gradient(
+  //   0deg,
+  //   rgba(255, 222, 233, 0.45) 0%,
+  //   rgba(230, 250, 255, 0.45) 100%
+  // );
+  // background-image: linear-gradient(
+  //   0deg,
+  //   rgba(255, 222, 233, 0.45) 0%,
+  //   rgba(230, 250, 255, 0.45) 100%
+  // );
+
+  width: 100%;
+
+  &__empty-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__header {
+    &-container {
+      padding-left: 16px;
+      margin-bottom: 16px;
+    }
+  }
+}
