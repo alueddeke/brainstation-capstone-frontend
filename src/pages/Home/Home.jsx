@@ -18,7 +18,6 @@ import LibraryViews from "../../components/LibraryViews/LibraryViews";
 function Home({ libraryViews, setLibraryViews }) {
   const { currentUser, userLoggedIn } = useAuth();
   const [libraryItems, setLibraryItems] = useState([]);
-  const [selectAI, setSelectAI] = useState("gpt");
   const [textInput, setTextInput] = useState("");
   const [response, setResponse] = useState({});
   const [isResponseVisible, setIsResponseVisible] = useState(false);
@@ -29,6 +28,10 @@ function Home({ libraryViews, setLibraryViews }) {
   const [loading, setIsLoading] = useState(false);
   const [textInputError, setTextInputError] = useState("");
   const [viewsError, setViewsError] = useState("");
+
+  //handling checkbox
+  // const [selectedAIs, setSelectedAIs] = useState([]);
+  const [selectAI, setSelectAI] = useState("gpt");
 
   const db = getFirestore();
 

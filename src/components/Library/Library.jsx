@@ -76,16 +76,18 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
                 />
               ))}
             </ul>
-            <div className="library__icon-hide-container">
+            <div
+              className={
+                sidebarIsCollapsed
+                  ? "library__icon-hide-container"
+                  : "invisible"
+              }
+            >
               <div className="library__icon-container ">
                 <img
                   src={hide}
                   alt="hide icon"
-                  className={
-                    sidebarIsCollapsed
-                      ? "library__icon library__icon-list "
-                      : "invisible"
-                  }
+                  className="library__icon library__icon-list "
                   onClick={handleHideLibrary}
                 />
               </div>
