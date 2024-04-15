@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
 import "./EditForm.scss";
-import { doc, getFirestore, updateDoc } from "firebase/firestore";
-import { render } from "react-dom";
+import { getFirestore } from "firebase/firestore";
+
 import UpdateEditForm from "../UpdateEditForm/UpdateEditForm";
 
 function EditForm({
   view,
   setEditModalOpen,
-  qLibItems,
-  currentUser,
   handleSubmitEditForm,
   pointState,
   setPointState,
   topicState,
   setTopicState,
 }) {
-  // const [topicState, setTopicState] = useState("");
-  // const [pointState, setPointState] = useState([]);
   const [commentState, setCommentState] = useState("");
 
   const db = getFirestore();
@@ -31,41 +27,6 @@ function EditForm({
     setTopicState(value);
   };
 
-  // async function qLibItems() {
-  //   const items = [];
-  //   const q = query(
-  //     collection(db, "libraryItems"),
-  //     where("uid", "==", currentUser.uid)
-  //   );
-  //   const snapshot = await getDocs(q);
-  //   snapshot.forEach((doc) => {
-  //     items.push({ ...doc.data(), isCollapsed: true, id: doc.id });
-  //   });
-  //   setLibraryItems(items);
-  // }
-
-  // async () => {
-  //   await deleteDoc(doc(db, "libraryItems", listItem.id));
-  //   qLibItems();
-  //   setIsModalOpen(false);
-  // };
-
-  // setdoc
-
-  // const handleEditPoint = (index, value) => {
-  //   const pointIndex = points.findIndex((point, i) => i === index);
-
-  //   if (pointIndex !== -1) {
-  //     const updatedPoints = [
-  //       ...points.slice(0, pointIndex),
-  //       value,
-  //       ...points.slice(pointIndex + 1),
-  //     ];
-
-  //     setResponse({ ...response, points: updatedPoints });
-  //     console.log(response);
-  //   }
-  // };
   console.log("view??", view.id);
 
   const renderedPoints = points
@@ -79,32 +40,6 @@ function EditForm({
         />
       ))
     : null;
-
-  // const handleSubmitEditForm = async (e) => {
-  //   e.preventDefault();
-  //   console.log("topic state::", topicState);
-  //   let pointsValue = pointState;
-  //   let topicValue = topicState;
-  //   let commentValue = commentState;
-
-  //   console.log(topicValue);
-
-  //   await updateDoc(doc(db, "libraryItems", id), {
-  //     topic: topicValue,
-  //     points: pointsValue,
-  //     comment: commentValue,
-  //     // uid: currentUser.uid,
-  //   });
-  //   // qLibItems();
-  //   setEditModalOpen(false);
-  //   console.log("edit");
-  //   // setResponse({
-  //   //   topic: topicState,
-  //   //   points: pointState,
-  //   //   comment: commentState,
-  //   // });
-  //   // handleSaveItem(response);
-  // };
 
   return (
     <div className="edit-form">
@@ -124,21 +59,6 @@ function EditForm({
           </div>
           {renderedPoints}
 
-          {/* {[1, 2, 3, 4, 5].map((number, index) => (
-            <div key={index} className="edit-form__input-container">
-              <label htmlFor={`point${number}`} className="edit-form__label">
-                Point {number}
-              </label>
-              <textarea
-                type="text"
-                id={`point${number}`}
-                className="edit-form__input edit-form__point"
-                onChange={(e) => handlePointChange(index, e.target.value)}
-              >
-                {points[index]}
-              </textarea>
-            </div>
-          ))} */}
           <div className="edit-form__input-container">
             <label htmlFor="comments" className="edit-form__label">
               Comments

@@ -5,7 +5,13 @@ import Tooltip from "@mui/material/Tooltip";
 import { useState } from "react";
 import DeleteModal from "../DeleteModal/DeleteModal";
 
-function LibraryListItem({ listItem, handleItemClick, qLibItems, viewsError }) {
+function LibraryListItem({
+  listItem,
+  handleItemClick,
+  qLibItems,
+  viewsError,
+  sidebarIsCollapsed,
+}) {
   const db = getFirestore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -109,27 +115,27 @@ function LibraryListItem({ listItem, handleItemClick, qLibItems, viewsError }) {
             {isCollapsed ? (
               <div className="library-list-item__buttons-container">
                 <div
-                  className="library-list-item__left "
+                  className={
+                    sidebarIsCollapsed
+                      ? "library-list-item__left library-list-item__left--sidebar  "
+                      : "library-list-item__left  "
+                  }
                   onClick={() => {
                     handleItemClick(id);
                   }}
                 >
                   {topic}
                 </div>
-                <div className="library-list-item__right ">
-                  <img
-                    src={deleteIcon}
-                    alt="delete icon"
-                    className="delete-icon"
-                    onClick={() => setIsModalOpen(true)}
-                  />
-                </div>
-                {/* {isModalOpen && (
-                  <DeleteModal
-                    setIsModalOpen={setIsModalOpen}
-                    isModalOpen={isModalOpen}
-                  />
-                )} */}
+                {!sidebarIsCollapsed && (
+                  <div className="library-list-item__right ">
+                    <img
+                      src={deleteIcon}
+                      alt="delete icon"
+                      className="delete-icon"
+                      onClick={() => setIsModalOpen(true)}
+                    />
+                  </div>
+                )}
               </div>
             ) : (
               <div>

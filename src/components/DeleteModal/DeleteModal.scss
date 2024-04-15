@@ -36,16 +36,19 @@
 
       &.cancel {
         background-color: #ccc;
+        &:hover {
+          background-color: #a8a8a8;
+        }
       }
 
       &.delete {
         background-color: #e74c3c;
         color: #fff;
-      }
 
-      //   &:hover {
-      //     opacity: 0.8;
-      //   }
+        &:hover {
+          background-color: #c62828;
+        }
+      }
     }
   }
 }

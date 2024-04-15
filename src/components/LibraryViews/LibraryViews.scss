@@ -26,8 +26,10 @@
     margin-right: 16px;
     margin-left: 16px;
     cursor: pointer;
-    filter: invert(15%) sepia(9%) saturate(791%) hue-rotate(169deg)
-      brightness(94%) contrast(89%);
+    filter: invert(22%) sepia(16%) saturate(674%) hue-rotate(167deg)
+      brightness(92%) contrast(90%);
+    // filter: invert(15%) sepia(9%) saturate(791%) hue-rotate(169deg)
+    //   brightness(94%) contrast(89%);
     &:hover {
       filter: invert(3%) sepia(4%) saturate(5384%) hue-rotate(163deg)
         brightness(101%) contrast(89%);
@@ -37,6 +39,8 @@
   &__singles-container {
     display: flex;
     justify-content: space-around;
+    align-items: flex-start;
+    height: 100%;
     flex-wrap: wrap;
     padding: 12px;
     gap: 12px;
@@ -52,9 +56,4 @@
       border: 1px solid $gist-black;
     }
   }
-}
-
-.library-view-single {
-  margin-right: 16px;
-  max-width: 300px;
 }
