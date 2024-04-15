@@ -3,16 +3,27 @@ import "../../firebase/firebase";
 import LibraryListItem from "../LibraryListItem/LibraryListItem";
 import "./Library.scss";
 import library from "../../assets/icons/book-solid.svg";
-
+import list from "../../assets/icons/list-solid.svg";
 import backArrow from "../../assets/icons/arrow-left-solid.svg";
 import rightArrow from "../../assets/icons/arrow-right-solid.svg";
 import { useState } from "react";
+import hide from "../../assets/icons/minus-solid.svg";
 
 function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
   const [sidebarIsCollapsed, setSidebarIsCollapsed] = useState(false);
+  const [hideLibrary, setHideLibrary] = useState(false);
 
-  function toggleCollapsed() {
+  function toggleSidebarCollapsed() {
     setSidebarIsCollapsed(!sidebarIsCollapsed);
+    setHideLibrary(!hideLibrary);
+  }
+  function handleHideLibrary() {
+    setHideLibrary(!hideLibrary);
+  }
+
+  function expandLibrary() {
+    setSidebarIsCollapsed(false);
+    setHideLibrary(false);
   }
   return (
     <section
@@ -22,7 +33,7 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
           : "library library--collapsed sidebar__collapsed-content"
       }
     >
-      <div className="library__top">
+      <div className={hideLibrary ? "library__top-collapsed" : ""}>
         <div
           className={
             !sidebarIsCollapsed
@@ -33,21 +44,15 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
           {!sidebarIsCollapsed ? (
             <>
               <h2 className="library__header">library:</h2>
-              <div className="library__icon-container">
-                <img
-                  src={backArrow}
-                  alt="back arrow"
-                  className="library__icon-back library__icon "
-                  onClick={toggleCollapsed}
-                />
-              </div>{" "}
             </>
           ) : (
-            // <div className="sidebar__collapsed-total-width">
             <div className="sidebar__collapsed-content">
-              <img src={library} alt="book icon" className="library__icon" />
+              <img
+                src={library}
+                alt="book icon"
+                className="library__icon-book"
+              />
             </div>
-            // </div>
           )}
         </div>
 
@@ -56,7 +61,57 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
             <h3>Save a response to add +</h3>
           </div>
         ) : (
-          <ul className="library__list">
+          <div
+            className={!hideLibrary ? "library__list" : "library__list--hide"}
+          >
+            <ul>
+              {libraryItems.map((listItem, index) => (
+                <LibraryListItem
+                  key={index}
+                  handleItemClick={handleItemClick}
+                  listItem={listItem}
+                  viewsError={viewsError}
+                  qLibItems={qLibItems}
+                  sidebarIsCollapsed={sidebarIsCollapsed}
+                />
+              ))}
+            </ul>
+            <div className="library__icon-hide-container">
+              <div className="library__icon-container ">
+                <img
+                  src={hide}
+                  alt="hide icon"
+                  className={
+                    sidebarIsCollapsed
+                      ? "library__icon library__icon-list "
+                      : "invisible"
+                  }
+                  onClick={handleHideLibrary}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {hideLibrary && (
+          <div className="library__icon-container library__icon-list-container">
+            <img
+              src={list}
+              alt="list icon"
+              className="library__icon library__icon-list "
+              onClick={() => setHideLibrary(false)}
+            />
+          </div>
+        )}
+
+        {/* {libraryItems.length === 0 ? (
+          <div className="library__empty-list">
+            <h3>Save a response to add +</h3>
+          </div>
+        ) : (
+          <ul
+            className={!hideLibrary ? "library__list" : "library__list--hide"}
+          >
             {libraryItems.map((listItem, index) => (
               <LibraryListItem
                 key={index}
@@ -68,18 +123,28 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
               />
             ))}
           </ul>
-        )}
+        )} */}
       </div>
 
-      {sidebarIsCollapsed && (
+      {sidebarIsCollapsed ? (
         <div className="library__bottom sidebar__collapsed-content">
-          {/* <div className="sidebar__collapsed-content"> </div>*/}
           <div className="library__icon-container">
             <img
               src={rightArrow}
               alt="right arrow"
               className="library__icon"
-              onClick={toggleCollapsed}
+              onClick={expandLibrary}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="library__bottom sidebar__collapsed-content">
+          <div className="library__icon-container">
+            <img
+              src={backArrow}
+              alt="back arrow"
+              className="library__icon-back library__icon "
+              onClick={toggleSidebarCollapsed}
             />
           </div>
         </div>
