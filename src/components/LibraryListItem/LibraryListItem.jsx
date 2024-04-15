@@ -111,7 +111,7 @@ function LibraryListItem({
           }
           key={id}
         >
-          <>
+          <div className="collapsed-container">
             {isCollapsed ? (
               <div className="library-list-item__buttons-container">
                 <div
@@ -145,7 +145,7 @@ function LibraryListItem({
                 </button>
               </div>
             )}
-          </>
+          </div>
         </li>
       )}
     </>

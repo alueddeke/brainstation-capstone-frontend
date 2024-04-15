@@ -7,7 +7,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    max-width: 320px;
+    flex: 1;
+    max-width: 715px;
     // transition: max-height 0.6s ease;
   }
   padding: 8px;
@@ -92,6 +93,9 @@
     }
     &-right {
       width: 10%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
