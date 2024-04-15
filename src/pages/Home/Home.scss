@@ -46,7 +46,7 @@
     flex: 1;
   }
   &__left {
-    width: 20%;
+    // width: 20%;
     display: flex;
     flex-direction: column;
     background-color: $gist-white;
@@ -54,6 +54,6 @@
   &__right {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
   }
 }

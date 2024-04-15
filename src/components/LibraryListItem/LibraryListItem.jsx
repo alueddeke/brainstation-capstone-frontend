@@ -103,50 +103,59 @@ function LibraryListItem({
           </li>
         </Tooltip>
       ) : (
-        <li
-          className={
-            isCollapsed
-              ? `library-list-item library-list-item__collapsed library-list-item__collapsed--${color}`
-              : `library-list-item library-list-item--${color}`
-          }
-          key={id}
-        >
-          <div className="collapsed-container">
-            {isCollapsed ? (
-              <div className="library-list-item__buttons-container">
-                <div
-                  className={
-                    sidebarIsCollapsed
-                      ? "library-list-item__left library-list-item__left--sidebar  "
-                      : "library-list-item__left  "
-                  }
-                  onClick={() => {
-                    handleItemClick(id);
-                  }}
-                >
-                  {topic}
-                </div>
-                {!sidebarIsCollapsed && (
-                  <div className="library-list-item__right ">
-                    <img
-                      src={deleteIcon}
-                      alt="delete icon"
-                      className="delete-icon"
-                      onClick={() => setIsModalOpen(true)}
-                    />
+        // <div
+        //   className={sidebarIsCollapsed ? "sidebar__collapsed-total-width" : ""}
+        // >
+        <div className={sidebarIsCollapsed ? "sidebar__collapsed-content" : ""}>
+          <li
+            className={
+              isCollapsed
+                ? `library-list-item library-list-item__collapsed library-list-item__collapsed--${color}`
+                : `library-list-item library-list-item--${color}`
+            }
+            key={id}
+          >
+            <>
+              {isCollapsed ? (
+                <div className="library-list-item__buttons-container">
+                  <div
+                    className={
+                      sidebarIsCollapsed
+                        ? "library-list-item__left library-list-item__left--sidebar  "
+                        : "library-list-item__left  "
+                    }
+                    onClick={() => {
+                      handleItemClick(id);
+                    }}
+                  >
+                    {topic}
                   </div>
-                )}
-              </div>
-            ) : (
-              <div>
-                {renderedPoints}
-                <button className="button" onClick={() => handleItemClick(id)}>
-                  close
-                </button>
-              </div>
-            )}
-          </div>
-        </li>
+                  {!sidebarIsCollapsed && (
+                    <div className="library-list-item__right ">
+                      <img
+                        src={deleteIcon}
+                        alt="delete icon"
+                        className="delete-icon"
+                        onClick={() => setIsModalOpen(true)}
+                      />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  {renderedPoints}
+                  <button
+                    className="button"
+                    onClick={() => handleItemClick(id)}
+                  >
+                    close
+                  </button>
+                </div>
+              )}
+            </>
+          </li>
+        </div>
+        // </div>
       )}
     </>
   );

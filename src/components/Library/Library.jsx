@@ -15,13 +15,19 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
     setSidebarIsCollapsed(!sidebarIsCollapsed);
   }
   return (
-    <section className="library">
+    <section
+      className={
+        !sidebarIsCollapsed
+          ? "library"
+          : "library library--collapsed sidebar__collapsed-content"
+      }
+    >
       <div className="library__top">
         <div
           className={
             !sidebarIsCollapsed
               ? "library__header-container"
-              : "library__header-container library__header-container--collapsed"
+              : "library__header-container library__header-container--collapsed sidebar__collapsed-content"
           }
         >
           {!sidebarIsCollapsed ? (
@@ -37,7 +43,11 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
               </div>{" "}
             </>
           ) : (
-            <img src={library} alt="book icon" className="library__icon" />
+            // <div className="sidebar__collapsed-total-width">
+            <div className="sidebar__collapsed-content">
+              <img src={library} alt="book icon" className="library__icon" />
+            </div>
+            // </div>
           )}
         </div>
 
@@ -62,13 +72,16 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
       </div>
 
       {sidebarIsCollapsed && (
-        <div className="library__bottom">
-          <img
-            src={rightArrow}
-            alt="right arrow"
-            className="library__icon"
-            onClick={toggleCollapsed}
-          />
+        <div className="library__bottom sidebar__collapsed-content">
+          {/* <div className="sidebar__collapsed-content"> </div>*/}
+          <div className="library__icon-container">
+            <img
+              src={rightArrow}
+              alt="right arrow"
+              className="library__icon"
+              onClick={toggleCollapsed}
+            />
+          </div>
         </div>
       )}
     </section>

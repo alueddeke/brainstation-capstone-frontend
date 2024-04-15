@@ -74,6 +74,17 @@ li {
   cursor: pointer;
 }
 
+.sidebar {
+  &__collapsed-total-width {
+    display: flex;
+    padding: 0 2px;
+  }
+  &__collapsed-content {
+    width: 65px;
+    text-align: center;
+  }
+}
+
 @keyframes scale {
   0% {
     transform: scale(1);
