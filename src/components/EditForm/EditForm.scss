@@ -21,15 +21,15 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     min-width: 60%;
     &--gpt {
-      background-color: #fff;
+      background-color: $gpt-green;
       background-image: linear-gradient(0deg, $gpt-green 0%, #fff);
     }
     &--gemini {
-      background-color: #fff;
+      background-color: $gemini-purple;
       background-image: linear-gradient(0deg, $gemini-purple 0%, #fff 100%);
     }
     &--perplexity {
-      background-color: #fff;
+      background-color: $perplexity-blue;
       background-image: linear-gradient(0deg, $perplexity-blue 0%, #fff);
     }
   }

@@ -10,6 +10,9 @@ import {
 import { useAuth } from "../../contexts/authContext";
 import { useNavigate, Navigate } from "react-router-dom";
 
+import googleIcon from "../../assets/icons/google-icon.svg";
+import facebookIcon from "../../assets/icons/facebook-icon.svg";
+
 const LoginModal = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState();
@@ -176,13 +179,23 @@ const LoginModal = () => {
               onClick={handleGoogleLogin}
               className="modal__social-button"
             >
+              <img
+                src={googleIcon}
+                alt="google icon"
+                className="login__icon login__icon--google"
+              />
               Google
             </button>
             <button
-              disabled={isSigningIn}
+              disabled
               onClick={handleFacebookLogin}
               className="modal__social-button"
             >
+              <img
+                src={facebookIcon}
+                alt="facebook icon"
+                className="login__icon"
+              />
               Facebook
             </button>
           </div>

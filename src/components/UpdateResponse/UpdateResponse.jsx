@@ -4,30 +4,54 @@ import deleteIcon from "../../assets/icons/circle-xmark-solid.svg";
 import confirmIcon from "../../assets/icons/circle-check-solid.svg";
 import { useState } from "react";
 
-function UpdateResponse({ index, point, response, setResponse }) {
+function UpdateResponse({
+  index,
+  point,
+  responseObject,
+  setResponse,
+  response,
+}) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const { points, color } = response;
+  const { points, color } = responseObject;
 
-  const handleEditPoint = (index, value) => {
-    const pointIndex = points.findIndex((point, i) => i === index);
+  const handleEditPoint = (id, index, value) => {
+    const updatedResponseArray = [...response];
+    const responseIndex = updatedResponseArray.findIndex(
+      (obj) => obj.id === id
+    );
 
-    if (pointIndex !== -1) {
-      const updatedPoints = [
-        ...points.slice(0, pointIndex),
-        value,
-        ...points.slice(pointIndex + 1),
-      ];
+    if (responseIndex !== -1) {
+      const updatedPoints = [...updatedResponseArray[responseIndex].points];
+      updatedPoints[index] = value;
 
-      setResponse({ ...response, points: updatedPoints });
-      console.log(response);
+      updatedResponseArray[responseIndex] = {
+        ...updatedResponseArray[responseIndex],
+        points: updatedPoints,
+      };
+
+      setResponse(updatedResponseArray);
     }
   };
 
-  const handleDeletePoint = (index) => {
-    const updatedPoints = points.filter((_, i) => i !== index);
-    setResponse({ ...response, points: updatedPoints });
-    setIsEditing(false);
+  const handleDeletePoint = (id, index) => {
+    const updatedResponseArray = [...response];
+    const responseIndex = updatedResponseArray.findIndex(
+      (obj) => obj.id === id
+    );
+
+    if (responseIndex !== -1) {
+      const updatedPoints = [...updatedResponseArray[responseIndex].points];
+      updatedPoints.splice(index, 1);
+
+      updatedResponseArray[responseIndex] = {
+        ...updatedResponseArray[responseIndex],
+        points: updatedPoints,
+      };
+
+      setResponse(updatedResponseArray);
+      setIsEditing(false);
+    }
   };
 
   return (
@@ -42,7 +66,7 @@ function UpdateResponse({ index, point, response, setResponse }) {
           id={index}
           className="update-point__area-edit"
           onChange={(e) => {
-            handleEditPoint(index, e.target.value);
+            handleEditPoint(responseObject.id, index, e.target.value);
           }}
         >
           {point}
@@ -63,7 +87,7 @@ function UpdateResponse({ index, point, response, setResponse }) {
               src={deleteIcon}
               alt="delete icon"
               className="update-point__icon update-point__icon-delete"
-              onClick={() => handleDeletePoint(index)}
+              onClick={() => handleDeletePoint(responseObject.id, index)}
             />
             <img
               src={confirmIcon}

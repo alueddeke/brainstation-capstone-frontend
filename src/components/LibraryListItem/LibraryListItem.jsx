@@ -103,9 +103,6 @@ function LibraryListItem({
           </li>
         </Tooltip>
       ) : (
-        // <div
-        //   className={sidebarIsCollapsed ? "sidebar__collapsed-total-width" : ""}
-        // >
         <div className={sidebarIsCollapsed ? "sidebar__collapsed-content" : ""}>
           <li
             className={

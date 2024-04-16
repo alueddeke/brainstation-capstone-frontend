@@ -13,7 +13,7 @@ function EditForm({
   topicState,
   setTopicState,
 }) {
-  const [commentState, setCommentState] = useState("");
+  // const [commentState, setCommentState] = useState("");
 
   const db = getFirestore();
   const { points, topic, color, id, comments } = view;
@@ -59,7 +59,7 @@ function EditForm({
           </div>
           {renderedPoints}
 
-          <div className="edit-form__input-container">
+          {/* <div className="edit-form__input-container">
             <label htmlFor="comments" className="edit-form__label">
               Comments
             </label>
@@ -72,7 +72,7 @@ function EditForm({
             >
               {comments ? comments : ""}
             </textarea>
-          </div>
+          </div> */}
           <div className="edit-form__buttons-container">
             <button
               className="edit-form__button edit-form__cancel"
