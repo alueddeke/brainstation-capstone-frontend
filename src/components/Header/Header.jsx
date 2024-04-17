@@ -23,12 +23,6 @@ function Header({ setLibraryViews }) {
           </div>
         </Link>
         <div className="header__links">
-          {/* <div className="header__link-container">
-            <Link to="/About" className="header__link">
-              About
-            </Link>
-          </div> */}
-
           <div className="header__logged-in-container">
             {userLoggedIn ? (
               <button

@@ -40,7 +40,7 @@ function LibraryListItem({
       )}
       {viewsError ? (
         <Tooltip
-          title={viewsError}
+          title=""
           placement="top-end"
           slotProps={{
             popper: {

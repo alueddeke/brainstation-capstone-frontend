@@ -9,7 +9,6 @@
     flex-direction: column;
     flex: 1;
     max-width: 715px;
-    // transition: max-height 0.6s ease;
   }
   padding: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -118,24 +117,3 @@
 .expand-icon--expanded {
   transform: rotate(180deg);
 }
-
-// @keyframes rotate {
-//   0% {
-//     transform: rotate(0deg);
-//   }
-//   100% {
-//     transform: rotate(180deg);
-//   }
-// }
-
-// @keyframes scaleUpandDown {
-//   0% {
-//     transform: scale(1);
-//   }
-//   50% {
-//     transform: scale(1.2);
-//   }
-//   100% {
-//     transform: scale(1);
-//   }
-// }

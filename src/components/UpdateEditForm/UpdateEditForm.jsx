@@ -5,7 +5,6 @@ function UpdateEditForm({ index, point, pointState, setPointState }) {
     const newPoints = [...pointState];
     newPoints[index] = value;
     setPointState(newPoints);
-    console.log("this is pointstate:", pointState);
   };
 
   return (

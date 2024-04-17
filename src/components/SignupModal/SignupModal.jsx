@@ -90,7 +90,7 @@ const SignupModal = () => {
       setIsRegistering(false);
     }
   };
-  //replace with github
+
   const handleFacebookSignup = async (e) => {
     if (!isRegistering) {
       setIsRegistering(true);
@@ -126,7 +126,7 @@ const SignupModal = () => {
               value={email}
               onChange={handleEmailChange}
               className="modal__form-input modal__form-email"
-            />{" "}
+            />
             {passwordError && (
               <span
                 className={`login__error ${

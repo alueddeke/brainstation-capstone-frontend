@@ -29,8 +29,7 @@ export const doSignInWithFacebook = async () => {
   const provider = new FacebookAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
-    // Additional actions after sign-in (e.g., saving to Firestore)
-    // result.user
+
     return result;
   } catch (error) {
     console.error("Error signing in with Facebook:", error);
@@ -40,19 +39,3 @@ export const doSignInWithFacebook = async () => {
 export const doSignOut = () => {
   return auth.signOut();
 };
-
-//password reset/change/send verification
-
-// export const doPasswordReset = (email) => {
-//   return sendPasswordResetEmail(auth, email);
-// };
-
-// export const doPasswordChange = (password) => {
-//   return updatePassword(auth.currentUser, password);
-// };
-
-// export const doSendEmailVerification = () => {
-//   return sendEmailVerification(auth.currentUser, {
-//     url: `${window.location.origin}/home`,
-//   });
-// };

@@ -4,7 +4,6 @@ import Tooltip from "@mui/material/Tooltip";
 import UpdateResponse from "../UpdateResponse/UpdateResponse";
 
 import "./MainForm.scss";
-// import { useState } from "react";
 
 function MainForm({
   loading,
@@ -24,13 +23,10 @@ function MainForm({
   selections,
 }) {
   const { userLoggedIn } = useAuth();
-  // const { points, color, selectedAI, topic } = response;
 
   function handleOpen() {
     setIsResponseVisible(true);
   }
-
-  // console.log(response);
 
   return (
     <div className="main-form__container">
@@ -235,97 +231,3 @@ function MainForm({
 }
 
 export default MainForm;
-{
-  /* <div className="main-form__radio-container">
-          <Tooltip
-            title="
-            Versatile LLM from OpenAi, the go-to option for any user"
-            placement="top-end"
-            slotProps={{
-              popper: {
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: [0, -6],
-                    },
-                  },
-                ],
-              },
-            }}
-            arrow
-          >
-            <div className="radio-button-container">
-              <label htmlFor="gpt">ChatGpt</label>
-              <input
-                type="radio"
-                id="gpt"
-                name="gpt"
-                value="gpt"
-                checked={selectAI === "gpt"}
-                onChange={() => handleSelectAIChange("gpt")}
-              />
-            </div>
-          </Tooltip>
-          <Tooltip
-            title="
-            Formerly Bard, Google's response to ChatGpt"
-            placement="top"
-            slotProps={{
-              popper: {
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: [0, -6],
-                    },
-                  },
-                ],
-              },
-            }}
-            arrow
-          >
-            <div className="radio-button-container">
-              <label htmlFor="gemini">Google Gemini</label>
-              <input
-                type="radio"
-                id="gemini"
-                name="gemini"
-                value="gemini"
-                checked={selectAI === "gemini"}
-                onChange={() => handleSelectAIChange("gemini")}
-              />
-            </div>
-          </Tooltip>
-          <Tooltip
-            title="
-           Ready to handle up-to-date requests"
-            placement="top-start"
-            arrow
-            slotProps={{
-              popper: {
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: [0, -6],
-                    },
-                  },
-                ],
-              },
-            }}
-          >
-            <div className="radio-button-container">
-              <label htmlFor="perplexity">Perplexity</label>
-              <input
-                type="radio"
-                id="perplexity"
-                name="perplexity"
-                value="perplexity"
-                checked={selectAI === "perplexity"}
-                onChange={() => handleSelectAIChange("perplexity")}
-              />
-            </div>
-          </Tooltip>
-        </div> */
-}

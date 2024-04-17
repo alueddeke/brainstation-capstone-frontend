@@ -90,7 +90,6 @@ const LoginModal = () => {
       }
       setIsLoading(false);
     }
-    console.log("Google Login");
   };
 
   const handleEmailChange = (e) => {
@@ -101,23 +100,21 @@ const LoginModal = () => {
     setPassword(e.target.value);
   };
 
-  //for now this is okay...eventually replace with github
   const handleFacebookLogin = async (e) => {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
       try {
         await doSignInWithFacebook();
-        // alert("sign in successful!");
+
         navigate("/");
       } catch (error) {
         console.error(error);
-        // setErrorMessage(error.message);
+
         setIsSigningIn(false);
       }
       setIsLoading(false);
     }
-    console.log("Facebook Login");
   };
 
   return (

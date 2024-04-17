@@ -16,7 +16,6 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
   function toggleSidebarCollapsed() {
     setSidebarIsCollapsed(!sidebarIsCollapsed);
     setHideLibrary(!hideLibrary);
-    console.log(sidebarIsCollapsed);
   }
   function handleHideLibrary() {
     setHideLibrary(!hideLibrary);
@@ -106,27 +105,6 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
             />
           </div>
         )}
-
-        {/* {libraryItems.length === 0 ? (
-          <div className="library__empty-list">
-            <h3>Save a response to add +</h3>
-          </div>
-        ) : (
-          <ul
-            className={!hideLibrary ? "library__list" : "library__list--hide"}
-          >
-            {libraryItems.map((listItem, index) => (
-              <LibraryListItem
-                key={index}
-                handleItemClick={handleItemClick}
-                listItem={listItem}
-                viewsError={viewsError}
-                qLibItems={qLibItems}
-                sidebarIsCollapsed={sidebarIsCollapsed}
-              />
-            ))}
-          </ul> 
-        )} */}
       </div>
 
       {sidebarIsCollapsed ? (

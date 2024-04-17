@@ -75,16 +75,6 @@ function Home({ libraryViews, setLibraryViews }) {
       return false;
     }
 
-    //check if previous selections array was the same
-    // if (
-    //   textInput.trim() === previousInput.trim()
-    // ) {
-    //   setTextInputError(
-    //     "Change your selections or your topic to get the gist!"
-    //   );
-    //   setIsLoading(false);
-    //   return;
-    // }
     if (textInput.trim() !== "") {
       setIsSubmitting(true);
 
@@ -93,30 +83,25 @@ function Home({ libraryViews, setLibraryViews }) {
           return value;
         })
         .map(([key]) => {
-          console.log("key:", key);
           if (key === "gpt") {
             prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Make sure to list each point with a number followed by a period, example: 1. `;
           } else if (key === "gemini") {
             prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Each point should not be longer than 120 characters, excluding a heading for the point if appropriate. Make sure to list each point with a number followed by a period, example: 1. `;
-            console.log("gemini was used");
           } else if (key === "perplexity") {
             prompt = `What are the 5 most important points to know if you were to talk about ${textInput} in a conversation? Make each point concise and easy to understand. Only provide the points, no confirmation. Make sure to list each point with a number followed by a period, example: 1. `;
-            console.log("perplexity was used");
           }
 
-          // Create a Promise for each Axios request
           return new Promise(async (resolve, reject) => {
             try {
-              console.log("key", key);
               const res = await axios.post(
                 `http://localhost:8080/response/${key}`,
                 { prompt }
               );
 
-              resolve(res); // Resolve the Promise with the Axios response
+              resolve(res);
             } catch (err) {
               console.error(err);
-              reject(err); // Reject the Promise if there's an error
+              reject(err);
             } finally {
               setIsSubmitting(false);
               setPreviousInput(textInput);
@@ -126,12 +111,12 @@ function Home({ libraryViews, setLibraryViews }) {
       Promise.all(arrayResponses)
         .then((responses) => {
           const keyResponsePairs = Object.entries(selections)
-            .filter(([key, value]) => value) // Keep only truthy values
-            .map(([key]) => key); // Extract keys
+            .filter(([key, value]) => value)
+            .map(([key]) => key);
 
           const transformedResponses = responses.map((response, index) => {
-            const key = keyResponsePairs[index]; // Get the key for the current response
-            const responseColor = key; // Assuming you want to use the key as the color
+            const key = keyResponsePairs[index];
+            const responseColor = key;
             const responseId = uuidv4();
             let responseArr = [];
 
@@ -149,7 +134,6 @@ function Home({ libraryViews, setLibraryViews }) {
             };
           });
 
-          console.log("Transformed Responses:", transformedResponses);
           setIsLoading(false);
           setPreviousInput(textInput);
           setTextInput("");
@@ -158,75 +142,18 @@ function Home({ libraryViews, setLibraryViews }) {
         })
         .catch((error) => {
           console.error("Error in one of the requests:", error);
-          // Handle error here
         });
     }
   }
 
-  // Wait for all Promises to resolve
-  //     Promise.all(arrayResponses)
-  //       .then((responses) => {
-  //         // console.log("responses", responses);
-  //         const transformedResponses = responses.map((response, index) => {
-  //           const key = Object.keys(selections)[index]; // Get the key for the current response
-  //           // console.log("key conversion:", key);
-  //           // console.log(`Data for response ${index + 1}:`, response.data);
-
-  //           const responseColor = key; // Assuming you want to use the key as the color
-  //           const responseId = uuidv4();
-  //           let responseArr = [];
-  //           // if (key === "perplexity") {
-  //           //   console.log(
-  //           //     "perplexity",
-  //           //     response.data.choices[0].message.content
-  //           //   );
-  //           //   responseArr = response.data.choices[0].message.content
-  //           //     .split(/\d+\./)
-  //           //     .filter((point) => point.trim() !== "")
-  //           //     .map((point) => point.trim());
-  //           // } else {
-  //           responseArr = response.data
-  //             .split(/\d+\./)
-  //             .filter((point) => point.trim() !== "")
-  //             .map((point) => point.trim());
-  //           //}
-
-  //           return {
-  //             color: responseColor,
-  //             selectedAI: key,
-  //             topic: textInput,
-  //             points: responseArr,
-  //             id: responseId,
-  //           };
-  //         });
-
-  //         // Now you have an array of transformed responses
-  //         console.log("Transformed Responses:", transformedResponses);
-  //         setIsLoading(false);
-  //         // Assuming you want to set this array in state
-
-  //         setPreviousInput(textInput);
-  //         setTextInput("");
-  //         setResponse(transformedResponses);
-  //         setSelections({ gpt: false, gemini: false, perplexity: false });
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error in one of the requests:", error);
-  //         // Handle error here
-  //       });
-  //   }
-  // }
-
   async function handleSaveItem(res) {
-    console.log("test");
     await addDoc(collection(db, "libraryItems"), {
       uid: currentUser.uid,
-      // uid: res.id,
+
       ...res,
     });
     qLibItems();
-    console.log("test2");
-    console.log("submission attempt");
+
     handleCloseResponse(res.id);
   }
 
@@ -234,13 +161,14 @@ function Home({ libraryViews, setLibraryViews }) {
     setPreviousAI(selectAI);
     setSelectAI(value);
   }
-
   function handleItemClick(id) {
     const clickedItem = libraryItems.find((item) => item.id === id);
     if (clickedItem) {
       const itemExists = libraryViews.some((item) => item.id === id);
       if (libraryViews.length === 3) {
-        setViewsError("You are already viewing max amount of items");
+        setViewsError("You are already viewing the maximum number of items");
+      } else {
+        setViewsError("");
       }
       if (!itemExists && libraryViews.length < 3) {
         setLibraryViews((prevLibraryViews) => [

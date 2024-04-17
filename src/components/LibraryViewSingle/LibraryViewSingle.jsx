@@ -24,7 +24,6 @@ function LibraryViewSingle({ view, setLibraryViews, qLibItems, currentUser }) {
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
-  console.log(expanded);
 
   function handleCloseView(id) {
     setLibraryViews((prevViews) => prevViews.filter((view) => view.id !== id));
@@ -42,18 +41,14 @@ function LibraryViewSingle({ view, setLibraryViews, qLibItems, currentUser }) {
 
   const handleSubmitEditForm = async (e) => {
     e.preventDefault();
-    console.log("topic state::", topicState);
+
     let pointsValue = pointState;
     let topicValue = topicState;
-    // let commentValue = commentState;
-
-    console.log(topicValue);
 
     await updateDoc(doc(db, "libraryItems", id), {
       topic: topicValue,
       points: pointsValue,
       hasBeenEdited: true,
-      // comment: commentValue,
     });
     qLibItems();
     setEditModalOpen(false);
@@ -85,12 +80,6 @@ function LibraryViewSingle({ view, setLibraryViews, qLibItems, currentUser }) {
         <div className="library-view-single__section">
           <h4 className="library-view-single__header">{topicState}</h4>
           <div className="library-view-single__buttons">
-            {/* <img
-                src={editIcon}
-                alt="edit icon"
-                className="library-view-single__icon view-edit-icon-"
-                onClick={() => setEditModalOpen(true)}
-              /> */}
             <img
               src={closeIcon}
               alt="close icon"

@@ -13,8 +13,6 @@ function EditForm({
   topicState,
   setTopicState,
 }) {
-  // const [commentState, setCommentState] = useState("");
-
   const db = getFirestore();
   const { points, topic, color, id, comments } = view;
 
@@ -26,8 +24,6 @@ function EditForm({
   const handleTopicChange = (value) => {
     setTopicState(value);
   };
-
-  console.log("view??", view.id);
 
   const renderedPoints = points
     ? points.map((point, index) => (
@@ -59,20 +55,6 @@ function EditForm({
           </div>
           {renderedPoints}
 
-          {/* <div className="edit-form__input-container">
-            <label htmlFor="comments" className="edit-form__label">
-              Comments
-            </label>
-            <textarea
-              id="comments"
-              className="edit-form__input edit-form__comments"
-              value={commentState}
-              placeholder="Anything to add?"
-              onChange={(e) => setCommentState(e.target.value)}
-            >
-              {comments ? comments : ""}
-            </textarea>
-          </div> */}
           <div className="edit-form__buttons-container">
             <button
               className="edit-form__button edit-form__cancel"

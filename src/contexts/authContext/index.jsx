@@ -9,23 +9,16 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  //whenever user logs in, user info gets set here
   const [currentUser, setCurrentUser] = useState(null);
-  //if user log in userLoggedin will be true
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  //whenever authentication state changes - login/out
   useEffect(() => {
-    //initializeUser called whenever user info received
-    //unsubscribe is for cleanup
     const unsubscribe = onAuthStateChanged(auth, initializeUser);
     return unsubscribe;
   }, []);
 
-  //when users have successful login, info will be user
   async function initializeUser(user) {
-    console.log({ user });
     if (user) {
       setCurrentUser({ ...user });
       setUserLoggedIn(true);
