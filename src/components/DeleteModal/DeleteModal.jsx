@@ -18,11 +18,11 @@ const DeleteModal = ({ setIsModalOpen, qLibItems, listItem }) => {
           </button>
           <button
             className="delete-modal__button delete"
-            // onClick={async () => {
-            //   await deleteDoc(doc(db, "libraryItems", listItem.id));
-            //   qLibItems();
-            //   setIsModalOpen(false);
-            // }}
+            onClick={async () => {
+              await deleteDoc(doc(db, "libraryItems", listItem.id));
+              qLibItems();
+              setIsModalOpen(false);
+            }}
           >
             Delete
           </button>
