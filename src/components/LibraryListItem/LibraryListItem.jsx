@@ -56,7 +56,6 @@ function LibraryListItem({
           }}
           arrow
         >
-          {" "}
           <li
             className={
               isCollapsed
@@ -81,10 +80,7 @@ function LibraryListItem({
                       src={deleteIcon}
                       alt="delete icon"
                       className="delete-icon"
-                      onClick={async () => {
-                        await deleteDoc(doc(db, "libraryItems", listItem.id));
-                        qLibItems();
-                      }}
+                      onClick={() => setIsModalOpen(true)}
                     />
                   </div>
                 </div>
@@ -103,7 +99,13 @@ function LibraryListItem({
           </li>
         </Tooltip>
       ) : (
-        <div className={sidebarIsCollapsed ? "sidebar__collapsed-content" : ""}>
+        <div
+          className={
+            sidebarIsCollapsed
+              ? "sidebar__collapsed-content library-list-item__container"
+              : "library-list-item__container"
+          }
+        >
           <li
             className={
               isCollapsed
@@ -128,11 +130,13 @@ function LibraryListItem({
                     {topic}
                   </div>
                   {!sidebarIsCollapsed && (
-                    <div className="library-list-item__right ">
+                    <div
+                      className={`library-list-item__right library-list-item__right--${color}`}
+                    >
                       <img
                         src={deleteIcon}
                         alt="delete icon"
-                        className="delete-icon"
+                        className={`delete-icon delete-icon--${color}`}
                         onClick={() => setIsModalOpen(true)}
                       />
                     </div>
@@ -152,7 +156,6 @@ function LibraryListItem({
             </>
           </li>
         </div>
-        // </div>
       )}
     </>
   );

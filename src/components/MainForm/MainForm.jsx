@@ -30,7 +30,7 @@ function MainForm({
     setIsResponseVisible(true);
   }
 
-  console.log(response);
+  // console.log(response);
 
   return (
     <div className="main-form__container">

@@ -107,6 +107,7 @@ function Home({ libraryViews, setLibraryViews }) {
           // Create a Promise for each Axios request
           return new Promise(async (resolve, reject) => {
             try {
+              console.log("key", key);
               const res = await axios.post(
                 `http://localhost:8080/response/${key}`,
                 { prompt }
@@ -122,28 +123,22 @@ function Home({ libraryViews, setLibraryViews }) {
             }
           });
         });
-
-      // Wait for all Promises to resolve
       Promise.all(arrayResponses)
         .then((responses) => {
-          const transformedResponses = responses.map((response, index) => {
-            const key = Object.keys(selections)[index]; // Get the key for the current response
-            console.log(`Data for response ${index + 1}:`, response.data);
+          const keyResponsePairs = Object.entries(selections)
+            .filter(([key, value]) => value) // Keep only truthy values
+            .map(([key]) => key); // Extract keys
 
+          const transformedResponses = responses.map((response, index) => {
+            const key = keyResponsePairs[index]; // Get the key for the current response
             const responseColor = key; // Assuming you want to use the key as the color
             const responseId = uuidv4();
             let responseArr = [];
-            if (key === "perplexity") {
-              responseArr = response.data.choices[0].message.content
-                .split(/\d+\./)
-                .filter((point) => point.trim() !== "")
-                .map((point) => point.trim());
-            } else {
-              responseArr = response.data
-                .split(/\d+\./)
-                .filter((point) => point.trim() !== "")
-                .map((point) => point.trim());
-            }
+
+            responseArr = response.data
+              .split(/\d+\./)
+              .filter((point) => point.trim() !== "")
+              .map((point) => point.trim());
 
             return {
               color: responseColor,
@@ -154,11 +149,8 @@ function Home({ libraryViews, setLibraryViews }) {
             };
           });
 
-          // Now you have an array of transformed responses
           console.log("Transformed Responses:", transformedResponses);
           setIsLoading(false);
-          // Assuming you want to set this array in state
-
           setPreviousInput(textInput);
           setTextInput("");
           setResponse(transformedResponses);
@@ -170,6 +162,60 @@ function Home({ libraryViews, setLibraryViews }) {
         });
     }
   }
+
+  // Wait for all Promises to resolve
+  //     Promise.all(arrayResponses)
+  //       .then((responses) => {
+  //         // console.log("responses", responses);
+  //         const transformedResponses = responses.map((response, index) => {
+  //           const key = Object.keys(selections)[index]; // Get the key for the current response
+  //           // console.log("key conversion:", key);
+  //           // console.log(`Data for response ${index + 1}:`, response.data);
+
+  //           const responseColor = key; // Assuming you want to use the key as the color
+  //           const responseId = uuidv4();
+  //           let responseArr = [];
+  //           // if (key === "perplexity") {
+  //           //   console.log(
+  //           //     "perplexity",
+  //           //     response.data.choices[0].message.content
+  //           //   );
+  //           //   responseArr = response.data.choices[0].message.content
+  //           //     .split(/\d+\./)
+  //           //     .filter((point) => point.trim() !== "")
+  //           //     .map((point) => point.trim());
+  //           // } else {
+  //           responseArr = response.data
+  //             .split(/\d+\./)
+  //             .filter((point) => point.trim() !== "")
+  //             .map((point) => point.trim());
+  //           //}
+
+  //           return {
+  //             color: responseColor,
+  //             selectedAI: key,
+  //             topic: textInput,
+  //             points: responseArr,
+  //             id: responseId,
+  //           };
+  //         });
+
+  //         // Now you have an array of transformed responses
+  //         console.log("Transformed Responses:", transformedResponses);
+  //         setIsLoading(false);
+  //         // Assuming you want to set this array in state
+
+  //         setPreviousInput(textInput);
+  //         setTextInput("");
+  //         setResponse(transformedResponses);
+  //         setSelections({ gpt: false, gemini: false, perplexity: false });
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error in one of the requests:", error);
+  //         // Handle error here
+  //       });
+  //   }
+  // }
 
   async function handleSaveItem(res) {
     console.log("test");

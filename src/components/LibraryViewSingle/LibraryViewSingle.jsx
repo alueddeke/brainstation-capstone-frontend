@@ -106,23 +106,25 @@ function LibraryViewSingle({ view, setLibraryViews, qLibItems, currentUser }) {
         </div>
       </div>
       <div className="library-view-single__bottom">
-        <div className="library-view-single__bottom-left">
-          <button
-            className="library-view-single__edit-button"
-            onClick={() => setEditModalOpen(true)}
-          >
-            edit
-          </button>
-        </div>
-        <div className="library-view-single__bottom-right">
-          <img
-            src={downIcon}
-            alt="down icon"
-            onClick={toggleExpanded}
-            className={`expand-icon ${
-              expanded ? "expand-icon--expanded expand-icon--scale" : ""
-            } `}
-          />
+        <div className="library-view-single__bottom-wrapper">
+          <div className="library-view-single__bottom-left">
+            <button
+              className="library-view-single__edit-button"
+              onClick={() => setEditModalOpen(true)}
+            >
+              edit
+            </button>
+          </div>
+          <div className="library-view-single__bottom-right">
+            <img
+              src={downIcon}
+              alt="down icon"
+              onClick={toggleExpanded}
+              className={`expand-icon ${
+                expanded ? "expand-icon--expanded expand-icon--scale" : ""
+              } `}
+            />
+          </div>
         </div>
       </div>
     </div>

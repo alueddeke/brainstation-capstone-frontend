@@ -7,9 +7,9 @@ li {
 .library-list-item {
   display: flex;
   border-radius: 4px;
+  position: relative;
 
   &:hover {
-    filter: brightness(95%);
     animation: scale 0.2s ease-in-out forwards;
   }
 
@@ -23,20 +23,33 @@ li {
     background-color: $perplexity-blue;
   }
 
+  &__container {
+    padding: 0 4px;
+  }
+
   &__collapsed {
     display: flex;
     justify-content: center;
 
-    padding: 4px;
+    padding: 6px;
 
     &--gpt {
-      background-color: $gpt-green;
+      background-color: $gpt-green-opacity;
+      &:hover {
+        background-color: $gpt-green;
+      }
     }
     &--gemini {
-      background-color: $gemini-purple;
+      background-color: $gemini-purple-opacity;
+      &:hover {
+        background-color: $gemini-purple;
+      }
     }
     &--perplexity {
-      background-color: $perplexity-blue;
+      background-color: $perplexity-blue-opacity;
+      &:hover {
+        background-color: $perplexity-blue;
+      }
     }
   }
 
@@ -53,25 +66,54 @@ li {
   &__left {
     width: 90%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-left: 10px;
 
     &--sidebar {
       width: 100%;
     }
   }
   &__right {
-    width: 10%;
+    width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    transition: filter 0.3s ease;
+    position: relative;
+
+    &--gpt {
+      box-shadow: -5px 0px 15px rgba(209, 255, 214, 0.5);
+    }
+    &--gemini {
+      box-shadow: -5px 0px 15px rgba(234, 217, 255, 0.5);
+    }
+    &--perplexity {
+      box-shadow: -5px 0px 15px rgba(168, 247, 249, 0.5);
+    }
   }
 }
 
 .delete-icon {
   width: 15px;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  &--gpt {
+    box-shadow: 0px 0px 5px rgba(209, 255, 214, 0.5);
+  }
+  &--gemini {
+    box-shadow: 0px 0px 5px rgba(234, 217, 255, 0.5);
+  }
+  &--perplexity {
+    box-shadow: 0px 0px 5px rgba(168, 247, 249, 0.5);
+  }
 }
 
 .sidebar {

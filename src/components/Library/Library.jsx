@@ -1,7 +1,7 @@
 import "../../firebase/firebase";
 
-import LibraryListItem from "../LibraryListItem/LibraryListItem";
 import "./Library.scss";
+import LibraryListItem from "../LibraryListItem/LibraryListItem";
 import library from "../../assets/icons/book-solid.svg";
 import list from "../../assets/icons/list-solid.svg";
 import backArrow from "../../assets/icons/arrow-left-solid.svg";
@@ -16,6 +16,7 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
   function toggleSidebarCollapsed() {
     setSidebarIsCollapsed(!sidebarIsCollapsed);
     setHideLibrary(!hideLibrary);
+    console.log(sidebarIsCollapsed);
   }
   function handleHideLibrary() {
     setHideLibrary(!hideLibrary);
@@ -124,7 +125,7 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
                 sidebarIsCollapsed={sidebarIsCollapsed}
               />
             ))}
-          </ul>
+          </ul> 
         )} */}
       </div>
 
@@ -140,7 +141,7 @@ function Library({ qLibItems, libraryItems, handleItemClick, viewsError }) {
           </div>
         </div>
       ) : (
-        <div className="library__bottom sidebar__collapsed-content">
+        <div className="library__bottom ">
           <div className="library__icon-container">
             <img
               src={backArrow}

@@ -17,7 +17,7 @@
 
   &__text-input {
     margin-top: 32px;
-    min-width: 300px;
+    width: 100%;
     border-radius: 4px;
     border: none;
     padding: 4px;
@@ -26,6 +26,10 @@
     background-position: right 5% bottom 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     outline: none;
+    @include tablet {
+      min-width: 300px;
+      max-width: 60%;
+    }
   }
 
   &__submit {
@@ -76,6 +80,10 @@ input[type="text"]:focus {
   &__array-container {
     display: flex;
     padding: 0 8px;
+    flex-direction: column;
+    @include tablet {
+      flex-direction: row;
+    }
   }
   &__container {
     position: relative;
@@ -86,7 +94,6 @@ input[type="text"]:focus {
     padding: 16px;
     margin: 8px;
     flex: 1;
-    // box-shadow: 0 2px 400px $gist-white;
 
     &--gpt {
       background-color: $gpt-green;

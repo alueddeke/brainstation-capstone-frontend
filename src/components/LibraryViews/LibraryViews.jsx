@@ -20,7 +20,7 @@ function LibraryViews({
           onClick={handleCloseViews}
           className="library-views__back-icon"
         />
-        <h1>These are your responses</h1>
+        <h1 className="library-views__top-header">These are your responses</h1>
       </div>
       <section className="library-views">
         <div className="library-views__singles-container">
