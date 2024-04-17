@@ -1,0 +1,61 @@
+@use "../../styles/partials/variables" as *;
+
+.update-point {
+  textarea {
+    resize: vertical;
+    &:focus {
+      border-color: $gist-black;
+    }
+  }
+  &__wrapper {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    &--gpt {
+      background-color: $gpt-green;
+    }
+    &--gemini {
+      background-color: $gemini-purple;
+    }
+    &--perplexity {
+      background-color: $perplexity-blue;
+    }
+    &:hover {
+      filter: brightness(95%);
+      //   animation: scale 0.2s ease-in-out forwards;
+    }
+  }
+  &__icon {
+    width: 25px;
+    cursor: pointer;
+    margin-right: 4px;
+    &:hover {
+      animation: scale 0.2s ease-in-out forwards;
+    }
+    &-delete {
+      &:hover {
+        filter: invert(63%) sepia(29%) saturate(6761%) hue-rotate(322deg)
+          brightness(103%) contrast(98%);
+      }
+    }
+    &-confirm {
+      &:hover {
+        filter: invert(99%) sepia(97%) saturate(571%) hue-rotate(53deg)
+          brightness(90%) contrast(130%);
+      }
+    }
+  }
+  &__buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 4px;
+  }
+
+  &__area-edit {
+    width: 100%;
+    overflow: hidden;
+    padding: 2px;
+  }
+}

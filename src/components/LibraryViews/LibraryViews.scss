@@ -1,0 +1,68 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.library-views {
+  &__wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+
+    &-header {
+      text-align: center;
+    }
+  }
+
+  &__back-icon {
+    width: 40px;
+    margin-right: 16px;
+    margin-left: 16px;
+    cursor: pointer;
+    filter: invert(22%) sepia(16%) saturate(674%) hue-rotate(167deg)
+      brightness(92%) contrast(90%);
+
+    &:hover {
+      filter: invert(3%) sepia(4%) saturate(5384%) hue-rotate(163deg)
+        brightness(101%) contrast(89%);
+    }
+  }
+
+  &__singles-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 100%;
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 12px;
+
+    @include tablet {
+      flex-direction: row;
+    }
+  }
+  &__button-container {
+    width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 64px;
+  }
+  &__back {
+    &:hover {
+      border: 1px solid $gist-black;
+    }
+  }
+}

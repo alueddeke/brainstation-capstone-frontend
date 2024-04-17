@@ -7,7 +7,6 @@ import { useAuth } from "../../contexts/authContext";
 function Header({ setLibraryViews }) {
   const navigate = useNavigate();
   const { userLoggedIn } = useAuth();
-  console.log("header", userLoggedIn);
 
   return (
     <header className="header">
@@ -24,11 +23,11 @@ function Header({ setLibraryViews }) {
           </div>
         </Link>
         <div className="header__links">
-          <div className="header__link-container">
+          {/* <div className="header__link-container">
             <Link to="/About" className="header__link">
               About
             </Link>
-          </div>
+          </div> */}
 
           <div className="header__logged-in-container">
             {userLoggedIn ? (

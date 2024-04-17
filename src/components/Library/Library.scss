@@ -1,0 +1,100 @@
+@use "../../styles/partials/variables" as *;
+
+.library {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+
+  &--collapsed {
+    width: none;
+  }
+  background-image: linear-gradient(0deg, #e6efeb 0%, #fff 100%);
+
+  // background: linear-gradient(0deg, hsl(145, 25%, 88%) 0%);
+
+  &__list {
+    &--hide {
+      display: none;
+    }
+  }
+  &__empty-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  &__icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    &-book {
+      width: 30px;
+      height: 30px;
+    }
+    &-hide-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    &-list {
+      width: 20px;
+      &-container {
+        margin-top: 65px;
+        text-align: center;
+      }
+    }
+
+    &-container {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      &:hover {
+        background-color: #dddddd;
+      }
+    }
+  }
+
+  &__header {
+    &-container {
+      padding-left: 16px;
+      padding-right: 45px;
+      padding-top: 6px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &--collapsed {
+        justify-content: center;
+        flex: 1;
+        padding: 4px;
+      }
+    }
+  }
+
+  &__top-collapsed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__bottom {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+    margin-top: 16px;
+  }
+}
+
+.invisible {
+  display: none;
+}

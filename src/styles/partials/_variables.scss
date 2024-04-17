@@ -4,16 +4,31 @@ $desktop-breakpoint: 1280px;
 
 //colors
 
-$gist-black: #212529;
+// $gist-black: #212529;
+
+$gist-black: #121619;
 
 $gist-black-lighter: lighten($gist-black, 15%);
 $gist-white: #f8f9fa;
 $gist-accent-1: #ffdee9;
 $gist-accent-2: #e6faff;
 
-$gpt-green: #e4ffe9;
-$gemini-purple: #ead9ff;
+$gpt-green: #d1ffd6;
+$gemini-purple: #dec2ff;
+// $gemini-purple: #ead9ff;
 $perplexity-blue: #a8f7f9;
+
+$gpt-green-opacity: #ebffed;
+$gemini-purple-opacity: rgba(234, 217, 255, 0.7);
+$perplexity-blue-opacity: #ecfdfe;
+
+// $gpt-green: #8db9ad;
+// $gemini-purple: #5c4ebc;
+// $perplexity-blue: #4ed3e4;
+
+//gradient greeen#a8c7b8
+
+//light gradient green dae7e0
 
 //potential gpt colors
 // #d1ffd6

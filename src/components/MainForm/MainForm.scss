@@ -9,7 +9,7 @@
   position: relative;
   top: 150px;
   &__container {
-    width: 60%;
+    // width: 60%;
   }
   &__radio-container {
     display: flex;
@@ -17,7 +17,7 @@
 
   &__text-input {
     margin-top: 32px;
-    width: 50%;
+    width: 100%;
     border-radius: 4px;
     border: none;
     padding: 4px;
@@ -26,6 +26,10 @@
     background-position: right 5% bottom 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     outline: none;
+    @include tablet {
+      min-width: 300px;
+      max-width: 60%;
+    }
   }
 
   &__submit {
@@ -73,6 +77,14 @@ input[type="text"]:focus {
 }
 
 .response {
+  &__array-container {
+    display: flex;
+    padding: 0 8px;
+    flex-direction: column;
+    @include tablet {
+      flex-direction: row;
+    }
+  }
   &__container {
     position: relative;
     top: 150px;
@@ -81,7 +93,7 @@ input[type="text"]:focus {
     border-radius: 4px;
     padding: 16px;
     margin: 8px;
-    // box-shadow: 0 2px 400px $gist-white;
+    flex: 1;
 
     &--gpt {
       background-color: $gpt-green;
