@@ -185,41 +185,13 @@ function MainForm({
                     >
                       close
                     </button>
-                    {userLoggedIn ? (
-                      <button
-                        className="button response__save response__save--login"
-                        onClick={() => handleSaveItem(res)}
-                        disabled={!userLoggedIn}
-                      >
-                        save
-                      </button>
-                    ) : (
-                      <Tooltip
-                        title="Sign up or login to save responses!"
-                        placement="top-start"
-                        arrow
-                        slotProps={{
-                          popper: {
-                            modifiers: [
-                              {
-                                name: "offset",
-                                options: {
-                                  offset: [0, -3],
-                                },
-                              },
-                            ],
-                          },
-                        }}
-                      >
-                        <button
-                          className="button response__save response__save--logout"
-                          onClick={() => handleSaveItem(res)}
-                          disabled={!userLoggedIn}
-                        >
-                          save
-                        </button>
-                      </Tooltip>
-                    )}
+
+                    <button
+                      className="button response__save response__save--login"
+                      onClick={() => handleSaveItem(res)}
+                    >
+                      save
+                    </button>
                   </div>
                 </div>
               </div>

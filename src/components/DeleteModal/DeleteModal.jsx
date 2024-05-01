@@ -16,11 +16,35 @@ const DeleteModal = ({ setIsModalOpen, qLibItems, listItem }) => {
           >
             Cancel
           </button>
-          <button
+          {/* <button
             className="delete-modal__button delete"
             onClick={async () => {
               await deleteDoc(doc(db, "libraryItems", listItem.id));
               qLibItems();
+              setIsModalOpen(false);
+            }}
+          > */}
+          <button
+            className="delete-modal__button delete"
+            onClick={async () => {
+              console.log("deleting from local storage");
+              // Retrieve existing items from local storage
+              const items = JSON.parse(
+                localStorage.getItem("libraryItems") || "{}"
+              );
+
+              // Delete the item with the specified ID
+              if (items && items[listItem.id]) {
+                delete items[listItem.id];
+              }
+
+              // Save the updated items back to local storage
+              localStorage.setItem("libraryItems", JSON.stringify(items));
+
+              // Update the UI to reflect the changes
+              qLibItems();
+
+              // Close the modal
               setIsModalOpen(false);
             }}
           >
