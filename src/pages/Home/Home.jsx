@@ -40,49 +40,49 @@ function Home({ libraryViews, setLibraryViews }) {
 
   const db = getFirestore();
 
-  async function qLibItems() {
-    console.log("items retrieved from local storage");
-    const storedItems = localStorage.getItem("libraryItems");
-    const items = [];
-
-    if (storedItems) {
-      // Parse the stored JSON back into an object
-      const allItems = JSON.parse(storedItems);
-
-      // Transform items into the expected format
-      for (const id in allItems) {
-        items.push({
-          ...allItems[id],
-          isCollapsed: true,
-          id: id, // Using the key from the object as the ID
-        });
-      }
-    }
-
-    // Update your application state with the items
-    setLibraryItems(items);
-  }
-
-  useEffect(() => {
-    qLibItems();
-  }, []);
-
   // async function qLibItems() {
+  //   console.log("items retrieved from local storage");
+  //   const storedItems = localStorage.getItem("libraryItems");
   //   const items = [];
-  //   const q = query(
-  //     collection(db, "libraryItems"),
-  //     where("uid", "==", currentUser.uid)
-  //   );
-  //   const snapshot = await getDocs(q);
-  //   snapshot.forEach((doc) => {
-  //     items.push({ ...doc.data(), isCollapsed: true, id: doc.id });
-  //   });
+
+  //   if (storedItems) {
+  //     // Parse the stored JSON back into an object
+  //     const allItems = JSON.parse(storedItems);
+
+  //     // Transform items into the expected format
+  //     for (const id in allItems) {
+  //       items.push({
+  //         ...allItems[id],
+  //         isCollapsed: true,
+  //         id: id, // Using the key from the object as the ID
+  //       });
+  //     }
+  //   }
+
+  //   // Update your application state with the items
   //   setLibraryItems(items);
   // }
 
   // useEffect(() => {
   //   qLibItems();
   // }, []);
+
+  async function qLibItems() {
+    const items = [];
+    const q = query(
+      collection(db, "libraryItems"),
+      where("uid", "==", currentUser.uid)
+    );
+    const snapshot = await getDocs(q);
+    snapshot.forEach((doc) => {
+      items.push({ ...doc.data(), isCollapsed: true, id: doc.id });
+    });
+    setLibraryItems(items);
+  }
+
+  useEffect(() => {
+    qLibItems();
+  }, []);
 
   let arrayResponses = [];
   async function handleSubmit(event) {
@@ -173,39 +173,39 @@ function Home({ libraryViews, setLibraryViews }) {
     }
   }
 
-  async function handleSaveItem(res) {
-    console.log("saving to local storage");
-    const itemId = res.id || uuidv4();
-
-    // Retrieve existing items from local storage
-    const items = JSON.parse(localStorage.getItem("libraryItems") || "{}");
-
-    // Add the new item to the local storage object
-    items[itemId] = {
-      ...res,
-    };
-
-    // Save the updated items back to local storage
-    localStorage.setItem("libraryItems", JSON.stringify(items));
-
-    // Simulate a query update if necessary (this might not be needed if your UI doesn't require immediate update)
-    qLibItems();
-
-    // Handle close response (assuming you want to keep this functionality)
-    handleCloseResponse(itemId);
-    console.log({ libraryItems });
-  }
-
   // async function handleSaveItem(res) {
-  //   await addDoc(collection(db, "libraryItems"), {
-  //     uid: currentUser.uid,
+  //   console.log("saving to local storage");
+  //   const itemId = res.id || uuidv4();
 
+  //   // Retrieve existing items from local storage
+  //   const items = JSON.parse(localStorage.getItem("libraryItems") || "{}");
+
+  //   // Add the new item to the local storage object
+  //   items[itemId] = {
   //     ...res,
-  //   });
+  //   };
+
+  //   // Save the updated items back to local storage
+  //   localStorage.setItem("libraryItems", JSON.stringify(items));
+
+  //   // Simulate a query update if necessary (this might not be needed if your UI doesn't require immediate update)
   //   qLibItems();
 
-  //   handleCloseResponse(res.id);
+  //   // Handle close response (assuming you want to keep this functionality)
+  //   handleCloseResponse(itemId);
+  //   console.log({ libraryItems });
   // }
+
+  async function handleSaveItem(res) {
+    await addDoc(collection(db, "libraryItems"), {
+      uid: currentUser.uid,
+
+      ...res,
+    });
+    qLibItems();
+
+    handleCloseResponse(res.id);
+  }
 
   function handleSelectAIChange(value) {
     setPreviousAI(selectAI);
