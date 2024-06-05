@@ -40,33 +40,6 @@ function Home({ libraryViews, setLibraryViews }) {
 
   const db = getFirestore();
 
-  // async function qLibItems() {
-  //   console.log("items retrieved from local storage");
-  //   const storedItems = localStorage.getItem("libraryItems");
-  //   const items = [];
-
-  //   if (storedItems) {
-  //     // Parse the stored JSON back into an object
-  //     const allItems = JSON.parse(storedItems);
-
-  //     // Transform items into the expected format
-  //     for (const id in allItems) {
-  //       items.push({
-  //         ...allItems[id],
-  //         isCollapsed: true,
-  //         id: id, // Using the key from the object as the ID
-  //       });
-  //     }
-  //   }
-
-  //   // Update your application state with the items
-  //   setLibraryItems(items);
-  // }
-
-  // useEffect(() => {
-  //   qLibItems();
-  // }, []);
-
   async function qLibItems() {
     const items = [];
     const q = query(
