@@ -183,7 +183,7 @@ const LoginModal = () => {
               />
               Google
             </button>
-            <button
+            {/* <button
               disabled
               onClick={handleFacebookLogin}
               className="modal__social-button"
@@ -194,7 +194,7 @@ const LoginModal = () => {
                 className="login__icon"
               />
               Facebook
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
