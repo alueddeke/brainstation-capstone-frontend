@@ -22,7 +22,7 @@ function Header({ setLibraryViews }) {
             <h1 className="header__title">ist</h1>
           </div>
         </Link>
-        <div className="header__links">
+        {/* <div className="header__links">
           <div className="header__logged-in-container">
             {userLoggedIn ? (
               <button
@@ -52,7 +52,7 @@ function Header({ setLibraryViews }) {
               </>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </header>
   );
