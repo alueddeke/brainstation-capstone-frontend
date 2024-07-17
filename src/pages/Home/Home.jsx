@@ -39,7 +39,9 @@ function Home({ libraryViews, setLibraryViews }) {
   const [selectAI, setSelectAI] = useState("gpt");
 
   const API_BASE_URL = import.meta.env.VITE_API_URL;
-
+  if (!API_BASE_URL) {
+    throw new Error("API_BASE_URL is not set");
+  }
   const db = getFirestore();
 
   async function qLibItems() {
@@ -122,7 +124,7 @@ function Home({ libraryViews, setLibraryViews }) {
 
           return new Promise(async (resolve, reject) => {
             try {
-              const res = await axios.post(`API_BASE_URL/response/${key}`, {
+              const res = await axios.post(`${API_BASE_URL}/response/${key}`, {
                 prompt,
               });
 
